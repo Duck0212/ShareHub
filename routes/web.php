@@ -34,26 +34,22 @@ Route::prefix('assets')
     });
 
 //-----Auth routes-----
-Route::prefix('auth')
-    ->name('auth.')
-    ->group(function () {
-        //Đăng nhập
-        Route::view('/login', 'auth.login')->name('login');
+//Đăng nhập
+Route::view('/login', 'auth.login')->name('login');
 
-        //Đăng ký
-        Route::view('/register', 'auth.register')->name('register');
+//Đăng ký
+Route::view('/register', 'auth.register')->name('register');
 
-        //Quên mật khẩu
-        Route::view('/forgot-password', 'auth.forgot-password')->name('forgot-password');
+//Quên mật khẩu
+Route::view('/forgot-password', 'auth.forgot-password')->name('forgot-password');
 
-        //Đặt lại mật khẩu
-        Route::view('/reset-password/{token}', 'auth.reset-password')->name('reset-password');
+//Đặt lại mật khẩu
+Route::view('/reset-password/{token}', 'auth.reset-password')->name('reset-password');
 
-        //Xác thực email
-        Route::view('/verify-email', 'auth.verify-email')
-            ->middleware('auth')
-            ->name('verify-email');
-    });
+//Xác thực email
+Route::view('/verify-email', 'auth.verify-email')
+    ->middleware('auth')
+    ->name('verify-email');
 
 //-----Messages routes-----
 Route::prefix('messages')
