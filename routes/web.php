@@ -83,7 +83,7 @@ Route::prefix('rental-requests')
 
         //Đăng yêu cầu thuê
         Route::view('/create', 'rental-requests.create')
-            ->middleware('auth')
+            //->middleware('auth')
             ->name('create');
 
         //Danh sách yêu cầu thuê của tôi
