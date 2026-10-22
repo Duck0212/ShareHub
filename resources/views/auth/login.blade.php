@@ -76,8 +76,28 @@
                         Đăng nhập để tiếp tục thuê, cho thuê và quản lý tài sản an toàn.
                     </p>
                 </div>
+                @if (session('status') === 'password-reset')
+                <div class="rounded-lg bg-secondary-container/40 p-3 text-sm text-on-secondary-container">
+                    Mật khẩu đã được đặt lại thành công. Vui lòng đăng nhập bằng mật khẩu mới.
+                </div>
+                @endif
                 <!-- Form Component -->
-                <form class="space-y-space-md" onsubmit="event.preventDefault();">
+                <form class="space-y-space-md"
+                    method="POST"
+                    action="{{ route('login.store') }}">
+                    @csrf
+                    @if ($errors->any())
+                    <div
+                        role="alert"
+                        aria-live="polite"
+                        class="rounded-lg bg-red-50 text-red-700 p-3">
+                        <ul class="list-disc pl-5 space-y-1">
+                            @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
                     <!-- Email Field -->
                     <div class="space-y-space-xs">
                         <label class="font-label-lg text-label-lg text-on-surface flex items-center gap-1" for="email">
@@ -86,7 +106,14 @@
                         </label>
                         <div class="relative flex items-center">
                             <span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px] pointer-events-none">mail</span>
-                            <input class="w-full pl-10 pr-4 py-3 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest transition-all duration-200" id="email" name="email" placeholder="name@example.com" required="" type="email" />
+                            <input class="w-full pl-10 pr-4 py-3 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest transition-all duration-200"
+                                id="email"
+                                name="email"
+                                type="email"
+                                placeholder="name@example.com"
+                                value="{{ old('email') }}"
+                                autocomplete="username"
+                                required />
                         </div>
                     </div>
                     <!-- Password Field -->
@@ -97,19 +124,30 @@
                         </label>
                         <div class="relative flex items-center">
                             <span class="material-symbols-outlined absolute left-3 text-on-surface-variant text-[20px] pointer-events-none">lock</span>
-                            <input class="w-full pl-10 pr-12 py-3 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest transition-all duration-200" id="password" name="password" placeholder="••••••••" required="" type="password" />
-                            <button aria-label="Ẩn hoặc hiện mật khẩu" class="absolute right-3 p-1 text-on-surface-variant hover:text-on-surface focus:outline-none transition-colors" id="toggle-pwd" type="button">
-                                <span class="material-symbols-outlined text-[20px]" id="eye-icon">visibility</span>
+                            <input class="w-full bg-surface-container-low focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-11 py-3 placeholder:text-outline outline-none focus:ring-2 focus:ring-secondary transition-all"
+                                id="password"
+                                name="password"
+                                placeholder="Nhập mật khẩu của bạn"
+                                autocomplete="password"
+                                required
+                                type="password" />
+                            <button class="absolute right-3.5 text-outline hover:text-on-surface transition-colors cursor-pointer flex items-center" onclick="togglePasswordVisibility('password', this)" type="button">
+                                <span class="material-symbols-outlined text-[20px]">visibility_off</span>
                             </button>
                         </div>
                     </div>
                     <!-- Remember Me & Forgot Password Row -->
                     <div class="flex items-center justify-between pt-1">
                         <label class="flex items-center gap-space-xs cursor-pointer select-none">
-                            <input class="w-4 h-4 rounded text-secondary focus:ring-0 focus:outline-none cursor-pointer" id="remember" name="remember" type="checkbox" />
+                            <input class="w-4 h-4 rounded text-secondary focus:ring-0 focus:outline-none cursor-pointer"
+                                id="remember"
+                                name="remember"
+                                type="checkbox"
+                                value="1"
+                                @checked(old('remember')) />
                             <span class="font-body-md text-body-md text-on-surface-variant">Ghi nhớ tài khoản</span>
                         </label>
-                        <a class="font-label-lg text-label-lg text-secondary hover:underline focus:outline-none font-medium" href="#">
+                        <a class="font-label-lg text-label-lg text-secondary hover:underline focus:outline-none font-medium" href="{{ route('password.request') }}">
                             Quên mật khẩu?
                         </a>
                     </div>
@@ -141,7 +179,7 @@
                 <div class="mt-space-md text-center">
                     <p class="font-body-md text-body-md text-on-surface-variant">
                         Chưa có tài khoản?
-                        <a class="font-label-lg text-label-lg text-secondary hover:underline font-semibold ml-1" href="#">
+                        <a class="font-label-lg text-label-lg text-secondary hover:underline font-semibold ml-1" href="{{ route('register') }}">
                             Đăng ký ngay
                         </a>
                     </p>
@@ -158,19 +196,17 @@
         </div>
     </div>
     <script>
-        (function() {
-            const toggleBtn = document.getElementById('toggle-pwd');
-            const pwdInput = document.getElementById('password');
-            const eyeIcon = document.getElementById('eye-icon');
-
-            if (toggleBtn && pwdInput && eyeIcon) {
-                toggleBtn.addEventListener('click', function() {
-                    const isPassword = pwdInput.getAttribute('type') === 'password';
-                    pwdInput.setAttribute('type', isPassword ? 'text' : 'password');
-                    eyeIcon.textContent = isPassword ? 'visibility_off' : 'visibility';
-                });
+        function togglePasswordVisibility(fieldId, btn) {
+            const input = document.getElementById(fieldId);
+            const icon = btn.querySelector('.material-symbols-outlined');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility';
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility_off';
             }
-        })();
+        };
     </script>
 </main>
 @endsection

@@ -103,6 +103,21 @@ return [
 
     /*
     |--------------------------------------------------------------------------
+    | Email Verification
+    |--------------------------------------------------------------------------
+    |
+    | Here you may define the settings for email verification, including the
+    | expiration time of the verification link and the throttle limit.
+    |
+    */
+
+    'verification' => [
+        'expire' => 1440, // 1440 phút = 24 giờ
+        'throttle' => 60,  // Giới hạn thời gian gửi lại email (giây)
+    ],
+
+    /*
+    |--------------------------------------------------------------------------
     | Password Confirmation Timeout
     |--------------------------------------------------------------------------
     |

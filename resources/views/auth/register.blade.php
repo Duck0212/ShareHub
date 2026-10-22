@@ -39,7 +39,7 @@
                         </div>
                         <div class="flex flex-col">
                             <div class="flex items-center gap-2">
-                                <span class="font-headline-sm text-headline-sm text-on-surface">RentShare Escrow</span>
+                                <span class="font-headline-sm text-headline-sm text-on-surface">ShareHub Escrow</span>
                                 <span class="px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-label-sm text-label-sm">Bảo chứng</span>
                             </div>
                             <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
@@ -86,7 +86,7 @@
                     <div class="flex flex-col gap-1 mb-space-lg">
                         <h2 class="font-headline-md text-headline-md text-on-surface tracking-tight">Tạo tài khoản mới</h2>
                         <p class="font-body-md text-body-md text-on-surface-variant">
-                            Tham gia RentShare để thuê đồ bạn cần và kiếm tiền từ đồ bạn có.
+                            Tham gia ShareHub để thuê đồ bạn cần và kiếm tiền từ đồ bạn có.
                         </p>
                     </div>
                     <!-- Social SSO Button -->
@@ -105,13 +105,35 @@
                         <span class="absolute bg-surface-container-lowest px-3 font-label-md text-label-md text-outline">Hoặc đăng ký bằng email</span>
                     </div>
                     <!-- Form Elements -->
-                    <form class="flex flex-col gap-space-md" onsubmit="event.preventDefault();">
+                    <form
+                        class="flex flex-col gap-space-md" method="POST" action="{{ route('register.store') }}">
+                        @csrf
+                        @if ($errors->any())
+                        <div
+                            role="alert"
+                            aria-live="polite"
+                            class="rounded-lg bg-red-50 text-red-700 p-3 font-body-sm text-body-sm">
+                            <ul class="list-disc pl-5 space-y-1">
+                                @foreach ($errors->all() as $error)
+                                <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                        @endif
                         <!-- Full Name -->
                         <div class="flex flex-col gap-1.5">
                             <label class="font-label-lg text-label-lg text-on-surface" for="fullname">Họ và tên</label>
                             <div class="relative flex items-center">
                                 <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">person</span>
-                                <input class="w-full bg-surface-container-low focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-4 py-3 placeholder:text-outline outline-none focus:ring-2 focus:ring-secondary transition-all" id="fullname" placeholder="Nguyễn Văn A" required="" type="text" />
+                                <input class="w-full bg-surface-container-low focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-4 py-3 placeholder:text-outline outline-none focus:ring-2 focus:ring-secondary transition-all"
+                                    id="fullname"
+                                    name="name"
+                                    type="text"
+                                    placeholder="Nguyễn Văn A"
+                                    value="{{ old('name') }}"
+                                    autocomplete="name"
+                                    maxlength="255"
+                                    required />
                             </div>
                         </div>
                         <!-- Email -->
@@ -119,7 +141,15 @@
                             <label class="font-label-lg text-label-lg text-on-surface" for="email">Địa chỉ Email</label>
                             <div class="relative flex items-center">
                                 <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">mail</span>
-                                <input class="w-full bg-surface-container-low focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-4 py-3 placeholder:text-outline outline-none focus:ring-2 focus:ring-secondary transition-all" id="email" placeholder="tenban@email.com" required="" type="email" />
+                                <input class="w-full bg-surface-container-low focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-4 py-3 placeholder:text-outline outline-none focus:ring-2 focus:ring-secondary transition-all"
+                                    id="email"
+                                    name="email"
+                                    type="email"
+                                    placeholder="tenban@email.com"
+                                    value="{{ old('email') }}"
+                                    autocomplete="email"
+                                    maxlength="255"
+                                    required />
                             </div>
                         </div>
                         <!-- Password & Strength Meter -->
@@ -127,9 +157,16 @@
                             <label class="font-label-lg text-label-lg text-on-surface" for="password">Mật khẩu</label>
                             <div class="relative flex items-center">
                                 <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">lock</span>
-                                <input class="w-full bg-surface-container-low focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-11 py-3 placeholder:text-outline outline-none focus:ring-2 focus:ring-secondary transition-all" id="password" oninput="checkPasswordStrength(this.value)" placeholder="Tạo mật khẩu an toàn" required="" type="password" />
+                                <input class="w-full bg-surface-container-low focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-11 py-3 placeholder:text-outline outline-none focus:ring-2 focus:ring-secondary transition-all"
+                                    id="password"
+                                    name="password"
+                                    oninput="checkPasswordStrength(this.value)"
+                                    placeholder="Tạo mật khẩu an toàn"
+                                    autocomplete="new-password"
+                                    required
+                                    type="password" />
                                 <button class="absolute right-3.5 text-outline hover:text-on-surface transition-colors cursor-pointer flex items-center" onclick="togglePasswordVisibility('password', this)" type="button">
-                                    <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                    <span class="material-symbols-outlined text-[20px]">visibility_off</span>
                                 </button>
                             </div>
                             <!-- Strength Segmented Indicator -->
@@ -150,19 +187,35 @@
                             <label class="font-label-lg text-label-lg text-on-surface" for="confirm-password">Xác nhận mật khẩu</label>
                             <div class="relative flex items-center">
                                 <span class="material-symbols-outlined absolute left-3.5 text-outline text-[20px] pointer-events-none">lock_clock</span>
-                                <input class="w-full bg-surface-container-low focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-11 py-3 placeholder:text-outline outline-none focus:ring-2 focus:ring-secondary transition-all" id="confirm-password" oninput="checkPasswordMatch()" placeholder="Nhập lại mật khẩu" required="" type="password" />
+                                <input class="w-full bg-surface-container-low focus:bg-surface-container-lowest text-on-surface font-body-md text-body-md rounded-lg pl-10 pr-11 py-3 placeholder:text-outline outline-none focus:ring-2 focus:ring-secondary transition-all"
+                                    id="confirm-password"
+                                    name="password_confirmation"
+                                    oninput="checkPasswordMatch()"
+                                    placeholder="Nhập lại mật khẩu"
+                                    autocomplete="new-password"
+                                    required
+                                    type="password" />
                                 <button class="absolute right-3.5 text-outline hover:text-on-surface transition-colors cursor-pointer flex items-center" onclick="togglePasswordVisibility('confirm-password', this)" type="button">
-                                    <span class="material-symbols-outlined text-[20px]">visibility</span>
+                                    <span class="material-symbols-outlined text-[20px]">visibility_off</span>
                                 </button>
                             </div>
-                            <span class="hidden text-error font-label-sm text-label-sm mt-0.5" id="match-error">Mật khẩu nhập lại không khớp</span>
+                            <span class="hidden text-error font-label-sm text-label-sm mt-0.5"
+                                id="match-error"
+                                aria-live="polite">
+                                Mật khẩu nhập lại không khớp
+                            </span>
                         </div>
                         <!-- Checkboxes -->
                         <div class="flex flex-col gap-2.5 pt-1">
                             <label class="flex items-start gap-2.5 cursor-pointer">
-                                <input class="mt-1 w-4 h-4 rounded text-secondary accent-secondary focus:ring-secondary shrink-0 cursor-pointer" required="" type="checkbox" />
-                                <span class="font-body-sm text-body-sm text-on-surface">
-                                    Tôi đồng ý với <a class="text-secondary hover:underline font-label-lg text-label-lg" href="#">Điều khoản dịch vụ</a> và <a class="text-secondary hover:underline font-label-lg text-label-lg" href="#">Chính sách bảo mật</a> của RentShare.
+                                <input class="mt-1 w-4 h-4 rounded text-secondary accent-secondary focus:ring-secondary shrink-0 cursor-pointer"
+                                    id="terms"
+                                    name="terms"
+                                    value="1"
+                                    required
+                                    type="checkbox" />
+                                <span class=" font-body-sm text-body-sm text-on-surface">
+                                    Tôi đồng ý với <a class="text-secondary hover:underline font-label-lg text-label-lg" href="#">Điều khoản dịch vụ</a> và <a class="text-secondary hover:underline font-label-lg text-label-lg" href="#">Chính sách bảo mật</a> của ShareHub.
                                 </span>
                             </label>
                             <label class="flex items-start gap-2.5 cursor-pointer">
@@ -182,9 +235,8 @@
                     <div class="mt-space-md pt-space-md text-center bg-surface-container-low rounded-lg p-3">
                         <p class="font-body-md text-body-md text-on-surface">
                             Đã có tài khoản?
-                            <a class="text-secondary hover:underline font-headline-sm text-headline-sm ml-1 inline-flex items-center gap-0.5" href="#">
+                            <a class="text-secondary hover:underline font-headline-sm text-headline-sm ml-1 inline-flex items-center gap-0.5" href="{{ route('login') }}">
                                 Đăng nhập ngay
-                                <span class="material-symbols-outlined text-[16px]">chevron_right</span>
                             </a>
                         </p>
                     </div>
@@ -198,10 +250,10 @@
             const icon = btn.querySelector('.material-symbols-outlined');
             if (input.type === 'password') {
                 input.type = 'text';
-                icon.textContent = 'visibility_off';
+                icon.textContent = 'visibility';
             } else {
                 input.type = 'password';
-                icon.textContent = 'visibility';
+                icon.textContent = 'visibility_off';
             }
         }
 

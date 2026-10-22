@@ -20,7 +20,12 @@
                 Nhập địa chỉ email liên kết với tài khoản của bạn. Chúng tôi sẽ gửi hướng dẫn khôi phục mật khẩu trong giây lát.
             </p>
             <!-- Form Module -->
-            <form class="w-full flex flex-col gap-space-md" id="forgot-password-form" onsubmit="event.preventDefault(); handlePasswordReset();">
+            <form class="w-full flex flex-col gap-space-md"
+                action="{{ route('password.email') }}"
+                method="POST"
+                id="forgot-password-form">
+
+                @csrf
                 <!-- Input Group -->
                 <div class="flex flex-col gap-space-xs">
                     <label class="font-label-lg text-label-lg text-on-surface flex items-center justify-between" for="recovery-email">
@@ -31,8 +36,19 @@
                         <span class="material-symbols-outlined absolute left-3.5 text-on-surface-variant/60 pointer-events-none text-[20px]">
                             mail
                         </span>
-                        <input class="w-full pl-11 pr-4 py-3 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all duration-200" id="recovery-email" name="email" placeholder="example@rentshare.vn" required="" type="email" />
+                        <input
+                            class="w-full pl-11 pr-4 py-3 bg-surface-container-low rounded-lg font-body-md text-body-md text-on-surface placeholder:text-outline focus:outline-none focus:bg-surface-container-lowest focus:shadow-md transition-all duration-200"
+                            id="recovery-email"
+                            name="email"
+                            value="{{ old('email') }}"
+                            placeholder="example@ShareHub.vn"
+                            autocomplete="email"
+                            required
+                            type="email" />
                     </div>
+                    @error('email')
+                    <p class="text-sm text-error">{{ $message }}</p>
+                    @enderror
                 </div>
                 <!-- Submit Button -->
                 <button class="w-full py-3.5 px-space-md bg-primary text-on-primary font-label-lg text-label-lg rounded-lg shadow-md hover:opacity-95 active:scale-[0.99] transition-all duration-200 flex items-center justify-center gap-space-sm cursor-pointer mt-space-xs" id="submit-button" type="submit">
@@ -45,23 +61,31 @@
                         verified
                     </span>
                     <p class="font-body-sm text-body-sm text-on-surface-variant">
-                        Vì lý do bảo mật, nếu email tồn tại trong hệ thống, bạn sẽ nhận được đường dẫn khôi phục có hiệu lực trong <strong class="text-on-surface font-semibold">30 phút</strong>.
+                        Vì lý do bảo mật, nếu email tồn tại trong hệ thống, bạn sẽ nhận được đường dẫn khôi phục có hiệu lực trong <strong class="text-on-surface font-semibold">60 phút</strong>.
                     </p>
                 </div>
                 <!-- Success Notification Box (Initially Hidden) -->
-                <div class="hidden flex items-start gap-space-sm p-space-md bg-secondary-container/40 rounded-lg text-on-secondary-container transition-all duration-300" id="success-banner">
+                @if (session('status') === 'password-reset-link-sent')
+                <div class="flex items-start gap-space-sm p-space-md bg-secondary-container/40 rounded-lg text-on-secondary-container">
                     <span class="material-symbols-outlined text-secondary text-[22px] shrink-0 mt-0.5">
                         mark_email_read
                     </span>
+
                     <div class="flex flex-col gap-0.5">
-                        <p class="font-label-lg text-label-lg font-semibold text-secondary">Đã gửi liên kết khôi phục</p>
-                        <p class="font-body-sm text-body-sm text-on-surface-variant">Vui lòng kiểm tra hộp thư đến (và thư mục Spam/Quảng cáo) của bạn để tiếp tục quá trình đặt lại mật khẩu.</p>
+                        <p class="font-label-lg text-label-lg font-semibold text-secondary">
+                            Đã tiếp nhận yêu cầu
+                        </p>
+
+                        <p class="font-body-sm text-body-sm text-on-surface-variant">
+                            Nếu email phù hợp với một tài khoản trong hệ thống, bạn sẽ nhận được hướng dẫn đặt lại mật khẩu. Vui lòng kiểm tra hộp thư đến và thư mục Spam/Quảng cáo.
+                        </p>
                     </div>
                 </div>
+                @endif
             </form>
             <!-- Navigation Back Link -->
             <div class="mt-space-lg pt-space-md w-full flex items-center justify-center">
-                <a class="inline-flex items-center gap-space-xs font-label-lg text-label-lg text-on-surface hover:text-secondary transition-colors duration-150 py-1 px-space-xs rounded focus:outline-none" data-path="dang-nhap" href="#">
+                <a class="inline-flex items-center gap-space-xs font-label-lg text-label-lg text-on-surface hover:text-secondary transition-colors duration-150 py-1 px-space-xs rounded focus:outline-none" data-path="dang-nhap" href="{{ route('login') }}">
                     <span class="material-symbols-outlined text-[18px]">west</span>
                     <span>Quay lại Đăng nhập</span>
                 </a>
@@ -83,37 +107,5 @@
             </div>
         </div>
     </div>
-    <script>
-        function handlePasswordReset() {
-            const emailInput = document.getElementById('recovery-email');
-            const submitBtn = document.getElementById('submit-button');
-            const successBanner = document.getElementById('success-banner');
-
-            if (!emailInput.value || !emailInput.checkValidity()) {
-                emailInput.focus();
-                return;
-            }
-
-            // Interactive button loading state
-            submitBtn.disabled = true;
-            submitBtn.classList.add('opacity-75');
-            submitBtn.innerHTML = `
-      <span class="inline-block animate-spin material-symbols-outlined text-[18px]">progress_activity</span>
-      <span>Đang gửi thông tin...</span>
-    `;
-
-            // Simulated network resolution
-            setTimeout(() => {
-                submitBtn.disabled = false;
-                submitBtn.classList.remove('opacity-75');
-                submitBtn.innerHTML = `
-        <span class="material-symbols-outlined text-[18px]">check</span>
-        <span>Đã gửi thành công</span>
-      `;
-                submitBtn.classList.replace('bg-primary', 'bg-secondary');
-                successBanner.classList.remove('hidden');
-            }, 700);
-        }
-    </script>
 </main>
 @endsection

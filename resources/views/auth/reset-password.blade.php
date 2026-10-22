@@ -13,10 +13,21 @@
                     </div>
                     <h1 class="font-headline-lg text-headline-lg text-on-surface">Tạo mật khẩu mới</h1>
                     <p class="font-body-md text-body-md text-on-surface-variant mt-space-xs max-w-sm">
-                        Vui lòng thiết lập mật khẩu mạnh mới để bảo vệ tài khoản và các giao dịch của bạn trên RentShare.
+                        Vui lòng thiết lập mật khẩu mạnh mới để bảo vệ tài khoản và các giao dịch của bạn trên ShareHub.
                     </p>
                 </div>
-                <form class="mt-space-lg flex flex-col gap-space-md" id="reset-password-form" onsubmit="event.preventDefault(); handleFormSubmit();">
+                <form class="mt-space-lg flex flex-col gap-space-md"
+                    id="reset-password-form"
+                    action="{{ route('password.update') }}"
+                    method="POST">
+                    @csrf
+                    <input type="hidden" name="token" value="{{ $token }}">
+
+                    <input type="hidden" name="email" value="{{ old('email', $email) }}">
+
+                    @error('email')
+                    <p class="text-sm text-error">{{ $message }}</p>
+                    @enderror
                     <div class="flex flex-col gap-space-xs">
                         <label class="font-label-lg text-label-lg text-on-surface flex items-center justify-between" for="new-password">
                             <span>Mật khẩu mới</span>
@@ -24,11 +35,25 @@
                         </label>
                         <div class="relative flex items-center">
                             <span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">key</span>
-                            <input class="w-full pl-10 pr-11 py-2.5 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none transition-all placeholder:text-outline-variant" id="new-password" oninput="validatePassword()" placeholder="••••••••••••" required="" type="password" />
-                            <button aria-label="Hiển thị hoặc ẩn mật khẩu" class="absolute right-3 text-outline hover:text-on-surface focus:outline-none flex items-center justify-center p-1" onclick="toggleVisibility('new-password', 'toggle-icon-1')" type="button">
-                                <span class="material-symbols-outlined text-[20px]" id="toggle-icon-1">visibility</span>
+                            <input class="w-full pl-10 pr-11 py-2.5 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none transition-all placeholder:text-outline-variant"
+                                id="new-password"
+                                name="password"
+                                oninput="validatePassword()"
+                                placeholder="Tạo mật khẩu an toàn"
+                                autocomplete="new-password"
+                                required
+                                type="password" />
+                            <button
+                                aria-label="Hiển thị hoặc ẩn mật khẩu mới"
+                                class="absolute right-3.5 text-outline hover:text-on-surface transition-colors cursor-pointer flex items-center"
+                                onclick="togglePasswordVisibility('new-password', this)"
+                                type="button">
+                                <span class="material-symbols-outlined text-[20px]">visibility_off</span>
                             </button>
                         </div>
+                        @error('password')
+                        <p class="text-sm text-error">{{ $message }}</p>
+                        @enderror
                         <div class="w-full bg-surface-container h-1.5 rounded-full overflow-hidden mt-1">
                             <div class="h-full w-0 bg-outline transition-all duration-300" id="strength-meter-bar"></div>
                         </div>
@@ -54,9 +79,20 @@
                         <label class="font-label-lg text-label-lg text-on-surface" for="confirm-password">Xác nhận mật khẩu mới</label>
                         <div class="relative flex items-center">
                             <span class="material-symbols-outlined absolute left-3 text-outline text-[20px] pointer-events-none">lock</span>
-                            <input class="w-full pl-10 pr-11 py-2.5 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none transition-all placeholder:text-outline-variant" id="confirm-password" oninput="validateMatch()" placeholder="••••••••••••" required="" type="password" />
-                            <button aria-label="Hiển thị hoặc ẩn mật khẩu xác nhận" class="absolute right-3 text-outline hover:text-on-surface focus:outline-none flex items-center justify-center p-1" onclick="toggleVisibility('confirm-password', 'toggle-icon-2')" type="button">
-                                <span class="material-symbols-outlined text-[20px]" id="toggle-icon-2">visibility</span>
+                            <input class="w-full pl-10 pr-11 py-2.5 bg-surface-container-low text-on-surface rounded-lg font-body-md text-body-md focus:bg-surface-container-lowest focus:outline-none transition-all placeholder:text-outline-variant"
+                                id="confirm-password"
+                                name="password_confirmation"
+                                oninput="validateMatch()"
+                                placeholder="••••••••••••"
+                                autocomplete="new-password"
+                                required
+                                type="password" />
+                            <button
+                                aria-label="Hiển thị hoặc ẩn mật khẩu xác nhận"
+                                class="absolute right-3 text-outline hover:text-on-surface cursor-pointer focus:outline-none flex items-center justify-center p-1"
+                                onclick="togglePasswordVisibility('confirm-password', this)"
+                                type="button">
+                                <span class="material-symbols-outlined text-[20px]">visibility_off</span>
                             </button>
                         </div>
                         <div class="hidden items-center gap-1.5 font-body-sm text-body-sm mt-0.5" id="match-status">
@@ -76,7 +112,7 @@
                     </button>
                 </form>
                 <div class="mt-space-md text-center pt-space-sm">
-                    <a class="inline-flex items-center gap-1.5 text-secondary hover:text-on-secondary-container font-label-md text-label-md transition-colors focus:outline-none" data-path="dang-nhap" href="#">
+                    <a class="inline-flex items-center gap-1.5 text-secondary hover:text-on-secondary-container font-label-md text-label-md transition-colors focus:outline-none" data-path="dang-nhap" href="{{ route('login') }}">
                         <span class="material-symbols-outlined text-[16px]">arrow_back</span>
                         <span>Quay lại trang Đăng nhập</span>
                     </a>
@@ -85,17 +121,15 @@
         </div>
     </div>
     <script>
-        function toggleVisibility(inputId, iconId) {
-            const input = document.getElementById(inputId);
-            const icon = document.getElementById(iconId);
-            if (!input || !icon) return;
-
+        function togglePasswordVisibility(fieldId, btn) {
+            const input = document.getElementById(fieldId);
+            const icon = btn.querySelector('.material-symbols-outlined');
             if (input.type === 'password') {
                 input.type = 'text';
-                icon.textContent = 'visibility_off';
+                icon.textContent = 'visibility';
             } else {
                 input.type = 'password';
-                icon.textContent = 'visibility';
+                icon.textContent = 'visibility_off';
             }
         }
 
@@ -194,26 +228,6 @@
                 matchIcon.setAttribute('style', "font-variation-settings: 'FILL' 1;");
                 matchText.textContent = 'Mật khẩu xác nhận chưa khớp';
             }
-        }
-
-        function handleFormSubmit() {
-            const pwd = document.getElementById('new-password').value;
-            const confirmPwd = document.getElementById('confirm-password').value;
-            const isValid = pwd.length >= 8 && /[A-Z]/.test(pwd) && /[0-9\W_]/.test(pwd) && pwd === confirmPwd;
-
-            if (!isValid) {
-                alert('Vui lòng hoàn thành đúng các tiêu chuẩn mật khẩu an toàn và kiểm tra tính trùng khớp.');
-                return;
-            }
-
-            const btn = document.getElementById('submit-btn');
-            btn.disabled = true;
-            btn.innerHTML = `<span class="material-symbols-outlined animate-spin text-[18px]">progress_activity</span><span>Đang cập nhật...</span>`;
-
-            setTimeout(() => {
-                btn.className = "w-full bg-secondary text-on-secondary py-3 rounded-lg font-label-lg text-label-lg flex items-center justify-center gap-2 mt-2 shadow-sm";
-                btn.innerHTML = `<span class="material-symbols-outlined text-[18px]">check_circle</span><span>Đổi mật khẩu thành công!</span>`;
-            }, 1000);
         }
     </script>
 </main>

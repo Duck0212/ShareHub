@@ -13,7 +13,7 @@
 </head>
 
 <body class="bg-surface font-body-md text-on-surface antialiased">
-    <header class="relative w-full z-50 bg-surface/90 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]">full px-gutter grid grid-cols-[1fr_auto_1fr] items-center gap-space-md">
+    <header class="relative h-20 w-full px-gutter grid grid-cols-[1fr_auto_1fr] items-center gap-space-md">
 
         <div class="flex items-center justify-start">
             <a class="absolute left-10 top-1/2 -translate-y-1/2 z-10" href="{{ route('home') }}">
@@ -62,28 +62,43 @@
                 <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface">
                 </span>
             </a>
+            <div class="hidden md:flex flex-col text-right">
+                <a href="{{ route('my.profile') }}">
+                    <span class="font-label-lg text-headline-sm text-on-surface leading-tight">Minh Tuấn</span>
+                </a>
+                <span class="font-label-sm text-label-md text-secondary font-semibold">Uy tín 98/100</span>
+            </div>
             <div class="relative group">
-                <button class="flex items-center gap-2 pl-2 pr-1 py-1 rounded-full hover:bg-surface-container-low transition-all focus:outline-none" type="button">
-                    <div class="hidden md:flex flex-col text-right">
-                        <a href="{{ route('my.profile') }}">
-                            <span class="font-label-lg text-headline-sm text-on-surface leading-tight">Minh Tuấn</span>
-                        </a>
-                        <span class="font-label-sm text-label-md text-secondary font-semibold">Uy tín 98/100</span>
-                    </div>
+                <button class="peer flex items-center justify-center w-12 h-12 rounded-full overflow-hidden ring-1 ring-surface-container-high hover:ring-2 hover:ring-secondary transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                    aria-label="Mở menu tài khoản"
+                    aria-haspopup="true"
+                    type="button">
                     <a href="{{ route('my.profile') }}">
-                        <img alt="Profile" class="w-12 h-12 rounded-full object-cover ring-1 ring-surface-container-high" src="#" />
+                        <img alt="Profile" class="w-full h-full object-cover rounded-full" src="#" />
                     </a>
                 </button>
-                <div class="absolute right-0 top-full pt-2 w-56 hidden group-hover:block transition-all duration-150 z-50">
+                <div class="absolute right-0 top-full pt-2 w-56 invisible opacity-0 pointer-events-none group-hover:visible group-hover:opacity-100 group-hover:pointer-events-auto focus-within:visible focus-within:opacity-100 focus-within:pointer-events-auto transition-all duration-150 z-50">
                     <div class="bg-surface-container-lowest rounded-xl p-space-xs shadow-[0_10px_25px_-5px_rgba(11,28,48,0.12)] border border-surface-container-high">
                         <div class="px-space-sm py-2 border-b border-surface-container-high mb-1">
-                            <p class="font-label-lg text-headline-sm text-on-surface">Minh Tuấn</p>
-                            <div class="flex items-center gap-1.5 mt-0.5"><span class="material-symbols-outlined text-[14px] text-secondary">verified_user</span><span class="font-label-sm text-label-sm text-secondary font-semibold">Điểm tín nhiệm: 98/100</span></div>
-                        </div><a class="flex items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" data-path="trang-ca-nhan" href="#"><span class="material-symbols-outlined text-[18px]">person</span><span>Trang cá nhân</span></a><a class="flex items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" data-path="cai-dat" href="#"><span class="material-symbols-outlined text-[18px]">settings</span><span>Cài đặt tài khoản</span></a>
+                            <a class="flex items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" href="#">
+                                <span class="material-symbols-outlined text-[18px]">person</span>
+                                <span>Trang cá nhân</span>
+                            </a>
+                            <a class="flex items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" href="#">
+                                <span class="material-symbols-outlined text-[18px]">settings</span>
+                                <span>Cài đặt tài khoản</span>
+                            </a>
+                            <form method="POST" action="{{ route('logout') }}">
+                                @csrf
+                                <button class="cursor-pointer flex w-full items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" href="{{ route('logout') }}">
+                                    <span class="material-symbols-outlined text-[18px]">logout</span>
+                                    <span>Đăng xuất</span>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
         </div>
     </header>
     @yield('content')
