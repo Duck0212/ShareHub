@@ -1,11 +1,14 @@
 <?php
 
+use App\Http\Controllers\Home\HomeController;
+use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
 
 //-----Home routes-----
 
 //Trang chủ
-Route::view('/', 'home.index')->name('home');
+Route::get('/', [HomeController::class, 'home'])
+    ->name('home');
 
 //-----Assets routes-----
 Route::prefix('assets')
@@ -79,19 +82,29 @@ Route::prefix('rental-requests')
 
 //-----Users routes-----
 //Hồ sơ người dùng công khai
-Route::view('/users/{user}', 'users.show')->name('users.show');
+Route::get('/users/{username}', [UserController::class, 'show'])->name('users.show');
 
-Route::prefix('my')->middleware('auth')->name('my.')->group(function () {
+Route::prefix('my')
+    ->middleware('auth')
+    ->name('my.')
+    ->group(function () {
 
-    //Hồ sơ cá nhân
-    Route::view('/profile', 'users.profile')->name('profile');
+        //Hồ sơ cá nhân
+        Route::get('/profile', [UserController::class, 'profile'])
+            ->name('profile');
 
-    //Chỉnh sửa thông tin cá nhân
-    Route::view('/profile/edit', 'users.edit')->name('profile.edit');
+        //Chỉnh sửa thông tin cá nhân
+        Route::get('/profile/edit', [UserController::class, 'edit'])
+            ->name('profile.edit');
 
-    //Cài đặt tài khoản
+        //Cập nhật thông tin cá nhân
+        Route::put('/profile', [UserController::class, 'update'])
+            ->name('profile.update');
+
+        //Cài đặt tài khoản
 
 
-    //Hoạt động cá nhân
-    Route::view('/activity', 'users.activity')->name('activity');
-});
+        //Hoạt động cá nhân
+        Route::get('/activity', [UserController::class, 'activity'])
+            ->name('activity');
+    });

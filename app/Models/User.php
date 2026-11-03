@@ -15,6 +15,14 @@ class User extends Authenticatable implements MustVerifyEmail
         'name',
         'email',
         'password',
+        'username',
+        'avatar',
+        'cover_image',
+        'bio',
+        'location',
+        'city',
+        'district',
+        'tags',
     ];
 
     protected $hidden = [
@@ -27,6 +35,7 @@ class User extends Authenticatable implements MustVerifyEmail
         return [
             'email_verified_at' => 'datetime',
             'password' => 'hashed',
+            'tags' => 'array',
         ];
     }
 }

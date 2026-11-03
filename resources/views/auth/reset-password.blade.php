@@ -106,7 +106,7 @@
                             Sau khi đổi mật khẩu thành công, tất cả các phiên đăng nhập khác trên thiết bị lạ sẽ tự động đăng xuất để bảo đảm an toàn.
                         </p>
                     </div>
-                    <button class="w-full bg-primary text-on-primary py-3 rounded-lg font-label-lg text-label-lg hover:opacity-90 active:scale-[0.99] transition-all flex items-center justify-center gap-2 mt-2 shadow-sm" id="submit-btn" type="submit">
+                    <button class="w-full bg-primary text-on-primary py-3 rounded-lg font-label-lg text-label-lg cursor-pointer hover:opacity-90 active:scale-[0.99] transition-all flex items-center justify-center gap-2 mt-2 shadow-sm" id="submit-btn" type="submit">
                         <span>Cập nhật mật khẩu mới</span>
                         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                     </button>

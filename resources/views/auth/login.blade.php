@@ -157,6 +157,7 @@
                         <span class="material-symbols-outlined text-[18px]">arrow_forward</span>
                     </button>
                     <!-- Divider -->
+                    {{--
                     <div class="relative flex py-2 items-center">
                         <div class="flex-grow bg-surface-container-high h-[1px]"></div>
                         <span class="flex-shrink mx-4 font-label-sm text-label-sm text-outline uppercase tracking-wider">
@@ -174,6 +175,7 @@
                         </svg>
                         <span class="font-medium">Tiếp tục với Google</span>
                     </button>
+                    --}}
                 </form>
                 <!-- Sign up redirect -->
                 <div class="mt-space-md text-center">

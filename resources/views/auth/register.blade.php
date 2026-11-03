@@ -89,6 +89,7 @@
                             Tham gia ShareHub để thuê đồ bạn cần và kiếm tiền từ đồ bạn có.
                         </p>
                     </div>
+                    {{--
                     <!-- Social SSO Button -->
                     <button class="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-lg bg-surface-container-low hover:bg-surface-container text-on-surface font-label-lg text-label-lg transition-colors cursor-pointer" type="button">
                         <svg class="w-5 h-5 shrink-0" viewbox="0 0 24 24">
@@ -104,6 +105,7 @@
                         <div class="w-full h-px bg-surface-container-high"></div>
                         <span class="absolute bg-surface-container-lowest px-3 font-label-md text-label-md text-outline">Hoặc đăng ký bằng email</span>
                     </div>
+                    --}}
                     <!-- Form Elements -->
                     <form
                         class="flex flex-col gap-space-md" method="POST" action="{{ route('register.store') }}">

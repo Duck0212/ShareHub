@@ -9,29 +9,37 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
     @vite('resources/css/app.css')
 </head>
 
 <body class="bg-surface font-body-md text-on-surface antialiased">
     <header class="relative h-20 w-full px-gutter grid grid-cols-[1fr_auto_1fr] items-center gap-space-md">
 
+        <!-- CỘT 1: LOGO BÊN TRÁI -->
         <div class="flex items-center justify-start">
             <a class="absolute left-10 top-1/2 -translate-y-1/2 z-10" href="{{ route('home') }}">
-                <img alt="ShareHub Brand Logo" class="h-18 w-auto max-w-none object-contain" src="{{ asset('imgs/Logo.png') }}" />
+                <img alt="ShareHub Brand Logo" class="h-10 sm:h-12 md:h-16 lg:h-18 w-auto max-w-none object-contain" src="{{ asset('imgs/Logo.png') }}" />
             </a>
         </div>
 
+        <!-- CỘT 2: MENU ĐIỀU HƯỚNG Ở GIỮA -->
         <div class="flex items-center justify-center">
             <nav class="hidden xl:flex items-center gap-space-xl" data-active-classes="text-on-surface font-semibold bg-surface-container-low px-space-sm py-space-xs rounded-lg">
                 <a href="{{ route('home') }}" class="transition-colors font-body-md text-headline-sm {{ request()->routeIs('home') ? 'text-on-surface font-semibold bg-surface-container-low px-space-sm py-space-xs rounded-lg' : 'text-on-surface-variant hover:text-on-surface' }}">Khám phá</a>
                 <a href="{{ route('assets.index') }}" class="transition-colors font-body-md text-headline-sm {{ request()->routeIs('assets.index') ? 'text-on-surface font-semibold bg-surface-container-low px-space-sm py-space-xs rounded-lg' : 'text-on-surface-variant hover:text-on-surface' }}">Danh sách tài sản</a>
-                <a href="{{ route('rental-requests.index') }}" class="transition-colors font-body-md text-headline-sm {{ request()->routeIs('rental-requests.index') ? 'text-on-surface font-semibold bg-surface-container-low px-space-sm py-space-xs rounded-lg' : 'text-on-surface-variant hover:text-on-surface' }}">Yêu cầu thuê</a>
+                <a href="{{ route('rental-requests.index') }}" class="transition-colors font-body-md text-headline-sm {{ request()->routeIs('rental-requests.index') ? 'text-on-surface font-semibold bg-surface-container-low px-space-sm py-space-xs rounded-lg' : 'text-on-surface-variant hover:text-on-surface' }}">Bảng tin</a>
+                @auth
                 <a href="{{ route('rental-requests.my-requests') }}" class="transition-colors font-body-md text-headline-sm {{ request()->routeIs('rental-requests.my-requests') ? 'text-on-surface font-semibold bg-surface-container-low px-space-sm py-space-xs rounded-lg' : 'text-on-surface-variant hover:text-on-surface' }}">Đơn thuê của tôi</a>
                 <a href="{{ route('messages.index') }}" class="transition-colors font-body-md text-headline-sm {{ request()->routeIs('messages.index') ? 'text-on-surface font-semibold bg-surface-container-low px-space-sm py-space-xs rounded-lg' : 'text-on-surface-variant hover:text-on-surface' }}">Tin nhắn</a>
+                @endauth
             </nav>
         </div>
 
-        <div class="flex items-center justify-end gap-space-sm md:gap-space-md">
+        <!-- CỘT 3: KHU VỰC BÊN PHẢI (ĐÃ ĐĂNG NHẬP HOẶC CHƯA ĐĂNG NHẬP) -->
+        <div class="flex items-center justify-end gap-space-sm md:gap-space-md ml-auto">
+            @auth
+            <!-- Dropdown Đăng tin -->
             <div class="relative group">
                 <button class="bg-primary hover:bg-on-primary-fixed-variant text-on-primary font-label-lg text-headline-sm px-space-md py-space-xs h-9 rounded-lg flex items-center gap-1.5 shadow-[0_1px_4px_rgba(0,0,0,0.08)] transition-all cursor-pointer" type="button">
                     <span>Đăng tin</span>
@@ -44,53 +52,59 @@
                                 <span class="material-symbols-outlined text-lg">storefront</span>
                             </div>
                             <div>
-                                <p class="font-label-lg text-label-xl text-on-surface">1. Đăng tài sản cho thuê</p>
+                                <p class="font-label-lg text-label-xl text-on-surface">Đăng tài sản cho thuê</p>
                                 <p class="font-body-sm text-body-md text-on-surface-variant">Đăng tài sản muốn cho thuê</p>
                             </div>
-                        </a><a class="flex items-start gap-3 p-space-sm rounded-lg hover:bg-surface-container-low transition-colors" href="{{ route('rental-requests.create') }}">
+                        </a>
+                        <a class="flex items-start gap-3 p-space-sm rounded-lg hover:bg-surface-container-low transition-colors" href="{{ route('rental-requests.create') }}">
                             <div class="p-1.5 bg-secondary-container rounded-md text-on-secondary-container"><span class="material-symbols-outlined text-lg">search_check</span></div>
                             <div>
-                                <p class="font-label-lg text-label-xl text-on-surface">2. Đăng tìm thuê tài sản</p>
+                                <p class="font-label-lg text-label-xl text-on-surface">Đăng tìm thuê tài sản</p>
                                 <p class="font-body-sm text-body-md text-on-surface-variant">Đăng tìm tài sản cần thuê</p>
                             </div>
                         </a>
                     </div>
                 </div>
             </div>
+
+            <!-- Thông báo -->
             <a class="relative p-2 rounded-full hover:bg-surface-container-low text-on-surface-variant hover:text-on-surface transition-colors" href="{{ route('notifications.index') }}">
                 <span class="material-symbols-outlined text-[22px]">notifications</span>
-                <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface">
-                </span>
+                <span class="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-error ring-2 ring-surface"></span>
             </a>
+
+            <!-- Tên người dùng -->
             <div class="hidden md:flex flex-col text-right">
                 <a href="{{ route('my.profile') }}">
-                    <span class="font-label-lg text-headline-sm text-on-surface leading-tight">Minh Tuấn</span>
+                    <span class="font-label-lg text-headline-sm text-on-surface leading-tight">{{ auth()->user()->name }}</span>
                 </a>
-                <span class="font-label-sm text-label-md text-secondary font-semibold">Uy tín 98/100</span>
+                <a href="{{ route('my.activity') }}">
+                    <span class="font-label-sm text-label-md text-secondary font-semibold">{{'@' . auth()->user()->username }}</span>
+                </a>
             </div>
+
+            <!-- Avatar & Menu cá nhân -->
             <div class="relative group">
-                <button class="peer flex items-center justify-center w-12 h-12 rounded-full overflow-hidden ring-1 ring-surface-container-high hover:ring-2 hover:ring-secondary transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
+                <button class="cursor-pointer peer flex items-center justify-center w-12 h-12 rounded-full overflow-hidden ring-1 ring-surface-container-high hover:ring-2 hover:ring-secondary transition-all focus:outline-none focus-visible:ring-2 focus-visible:ring-secondary"
                     aria-label="Mở menu tài khoản"
                     aria-haspopup="true"
                     type="button">
-                    <a href="{{ route('my.profile') }}">
-                        <img alt="Profile" class="w-full h-full object-cover rounded-full" src="#" />
-                    </a>
+                    <img alt="Profile" class="w-full h-full object-cover rounded-full" src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('imgs/default-avatar.png') }}" />
                 </button>
                 <div class="absolute right-0 top-full pt-2 w-56 invisible opacity-0 pointer-events-none group-hover:visible group-hover:opacity-100 group-hover:pointer-events-auto focus-within:visible focus-within:opacity-100 focus-within:pointer-events-auto transition-all duration-150 z-50">
                     <div class="bg-surface-container-lowest rounded-xl p-space-xs shadow-[0_10px_25px_-5px_rgba(11,28,48,0.12)] border border-surface-container-high">
                         <div class="px-space-sm py-2 border-b border-surface-container-high mb-1">
-                            <a class="flex items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" href="#">
+                            <a class="flex items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" href="{{ route('my.profile') }}">
                                 <span class="material-symbols-outlined text-[18px]">person</span>
                                 <span>Trang cá nhân</span>
                             </a>
-                            <a class="flex items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" href="#">
+                            <a class="flex items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" href="{{ route('my.profile.edit') }}">
                                 <span class="material-symbols-outlined text-[18px]">settings</span>
                                 <span>Cài đặt tài khoản</span>
                             </a>
                             <form method="POST" action="{{ route('logout') }}">
                                 @csrf
-                                <button class="cursor-pointer flex w-full items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" href="{{ route('logout') }}">
+                                <button class="cursor-pointer flex w-full items-center gap-2.5 px-space-sm py-2 rounded-lg text-on-surface-variant hover:bg-surface-container-low hover:text-on-surface font-body-md text-body-md transition-colors" type="submit">
                                     <span class="material-symbols-outlined text-[18px]">logout</span>
                                     <span>Đăng xuất</span>
                                 </button>
@@ -99,6 +113,17 @@
                     </div>
                 </div>
             </div>
+            @else
+            <!-- NÚT ĐĂNG NHẬP / ĐĂNG KÝ (HIỂN THỊ KHI CHƯA ĐĂNG NHẬP) -->
+            <div class="flex items-center gap-2">
+                <a href="{{ route('login') }}" class="px-4 py-2 rounded-lg text-on-surface font-label-lg text-headline-sm hover:bg-surface-container transition-colors">
+                    Đăng nhập
+                </a>
+                <a href="{{ route('register') }}" class="px-4 py-2 rounded-lg bg-primary text-on-primary font-label-lg text-headline-sm hover:bg-primary-container shadow-sm transition-colors">
+                    Đăng ký
+                </a>
+            </div>
+            @endauth
         </div>
     </header>
     @yield('content')

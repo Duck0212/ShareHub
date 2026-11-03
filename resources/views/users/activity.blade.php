@@ -8,14 +8,11 @@
             <div class="w-full bg-surface-container-lowest rounded-xl p-space-md shadow-sm flex flex-col lg:flex-row items-start lg:items-center justify-between gap-space-md">
                 <div class="flex items-center gap-space-md">
                     <div class="relative">
-                        <img class="w-16 h-16 rounded-full object-cover shadow-sm" data-alt="Professional portrait of a friendly young Vietnamese male entrepreneur in a navy minimalist blazer with natural studio lighting and a clean neutral background." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCrjshJR3vad4hVFKW1X5k6x-RMoUtI_BVYk9cco5uGWUlbE-GWEtWbcU5k_JS1I5FEN4S1h_d4vnF9C6qJGZzIGIgMsqE8BWvoWHGwi59nYlkmGJ2v-6-VWY9cnk9N4wNQEi8AXatBzE1Eohysa_vL4RC1JzP_jmCpourHdbHGZX9z0nqUKeOL4380IgXW7oaF3qL6UwnQSCmZ5GqY3K1sO-K3NYG1Y4MXefVZ8cF1vxughZ86jis" />
-                        <span class="absolute bottom-0 right-0 w-4 h-4 bg-secondary rounded-full flex items-center justify-center text-on-secondary shadow-sm">
-                            <span class="material-symbols-outlined text-[10px]" style="font-variation-settings: 'FILL' 1;">check</span>
-                        </span>
+                        <img class="w-16 h-16 rounded-full object-cover shadow-sm" data-alt="Professional portrait of a friendly young Vietnamese male entrepreneur in a navy minimalist blazer with natural studio lighting and a clean neutral background." src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('imgs/default-avatar.png') }}" />
                     </div>
                     <div class="flex flex-col">
                         <div class="flex flex-wrap items-center gap-2">
-                            <span class="font-headline-md text-headline-md text-on-surface">Nguyễn Minh Tuấn</span>
+                            <span class="font-headline-md text-headline-md text-on-surface">{{ $user -> name }}</span>
                             <span class="inline-flex items-center gap-1 bg-secondary-container text-on-secondary-container font-label-sm text-label-sm px-2 py-0.5 rounded-full">
                                 <span class="material-symbols-outlined text-[14px]">verified</span>
                                 <span>Đã xác minh CCCD/eKYC</span>
@@ -26,19 +23,19 @@
                             </span>
                         </div>
                         <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-                            Thành viên từ 02/2023 · Hoạt động đồng thời 2 vai trò: Khách thuê &amp; Chủ tài sản uy tín
+                            Thành viên từ: {{ $user->created_at?->format('m/Y') }} · Hoạt động đồng thời 2 vai trò: Khách thuê &amp; Chủ tài sản uy tín
                         </p>
                     </div>
                 </div>
                 <!-- Quick Action Pill Group -->
                 <div class="flex items-center gap-space-sm w-full sm:w-auto self-stretch sm:self-auto justify-end">
-                    <a class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-surface-container hover:bg-surface-container-high text-secondary rounded-lg font-label-lg text-label-lg transition-colors" href="#">
+                    <a href="{{ route('rental-requests.create') }}" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-surface-container hover:bg-surface-container-high text-secondary rounded-lg font-label-lg text-label-lg transition-colors" href="#">
                         <span class="material-symbols-outlined text-[18px]">search_check</span>
-                        <span>Đăng tìm thuê</span>
+                        <span>Đăng tìm thuê tài sản</span>
                     </a>
-                    <a class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-primary hover:bg-on-primary-fixed-variant text-on-primary rounded-lg font-label-lg text-label-lg shadow-sm transition-colors" href="#">
+                    <a href="{{ route('assets.create') }}" class="flex-1 sm:flex-initial inline-flex items-center justify-center gap-1.5 px-4 py-2 bg-primary hover:bg-on-primary-fixed-variant text-on-primary rounded-lg font-label-lg text-label-lg shadow-sm transition-colors" href="#">
                         <span class="material-symbols-outlined text-[18px]">add_box</span>
-                        <span>+ Đăng cho thuê</span>
+                        <span>Đăng tài sản cho thuê</span>
                     </a>
                 </div>
             </div>

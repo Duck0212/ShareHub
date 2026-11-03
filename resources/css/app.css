@@ -11,6 +11,9 @@
 
 @theme {
     /* Colors */
+    --color-border: #E2E8F0;
+    --color-text-main: #0F172A;
+    --color-text-muted: #64748B;
     --color-error: #ba1a1a;
     --color-tertiary: #000000;
     --color-outline: #76777d;

@@ -3,151 +3,79 @@
 @section('content')
 <main class="w-full pt-20 bg-background min-h-screen">
     <div class="flex flex-col w-full">
-        <!-- Interactive View State Controller -->
-        <div class="w-full bg-secondary text-on-secondary px-margin-mobile lg:px-margin py-2.5 flex items-center justify-between text-body-sm transition-all duration-300" id="viewStateNotice">
-            <div class="max-w-[1280px] mx-auto w-full flex flex-wrap items-center justify-between gap-space-sm">
-                <div class="flex items-center gap-2">
-                    <span class="material-symbols-outlined text-[18px]">admin_panel_settings</span>
-                    <span class="font-medium">Chế độ xem: <strong id="currentViewLabel">Chủ tài khoản (Đang quản lý hồ sơ cá nhân)</strong></span>
-                    <span class="hidden sm:inline-block w-1.5 h-1.5 rounded-full bg-secondary-container"></span>
-                    <span class="hidden sm:inline-block text-secondary-container">Bạn có thể chỉnh sửa, thêm tài sản và quản lý ký quỹ trực tiếp</span>
-                </div>
-                <div class="flex items-center gap-space-sm">
-                    <button class="px-3 py-1 rounded-full bg-surface text-on-surface hover:bg-surface-container font-label-sm text-label-sm font-semibold transition-all flex items-center gap-1.5 shadow-sm" id="toggleViewModeBtn" type="button">
-                        <span class="material-symbols-outlined text-[15px]">visibility</span>
-                        <span id="toggleBtnText">Xem dưới góc nhìn khách xem</span>
-                    </button>
-                </div>
-            </div>
-        </div>
         <div class="max-w-[1280px] mx-auto w-full px-margin-mobile lg:px-margin py-space-md">
             <!-- Breadcrumb -->
             <nav aria-label="Breadcrumb" class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-md mb-space-md">
-                <a class="hover:text-secondary transition-colors" href="#">Trang chủ</a>
+                <a class="hover:text-secondary transition-colors" href="{{ route('home') }}">Trang chủ</a>
                 <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-                <a class="hover:text-secondary transition-colors" href="#">Hoạt động cá nhân</a>
-                <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-                <span class="text-on-surface font-semibold">Hồ sơ cá nhân (@tuannm_photo)</span>
+                <span class="text-on-surface font-semibold">Hồ sơ cá nhân {{ '(@'.$user->username.')' }}</span>
             </nav>
             <!-- Main Profile Card -->
             <section class="w-full bg-surface-container-lowest rounded-xl shadow-sm overflow-hidden mb-space-lg">
                 <!-- Cover Banner with Modern Tactile Gradient & Quick Action -->
-                <div class="relative h-48 md:h-56 w-full bg-gradient-to-r from-primary-container via-secondary to-primary-container p-space-md flex justify-end items-start overflow-hidden">
-                    <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#86f2e4_1px,transparent_1px)] [background-size:16px_16px]"></div>
-                    <button class="owner-control relative z-10 px-3 py-1.5 rounded-lg bg-surface/90 hover:bg-surface text-on-surface text-label-sm font-semibold flex items-center gap-1.5 backdrop-blur-md shadow-sm transition-transform active:scale-95" type="button">
+                <div class="relative h-48 md:h-100 w-full from-primary-container via-secondary to-primary-container p-space-md flex justify-end items-start overflow-hidden">
+
+                    @if(!empty($user->cover_image))
+                    <!-- Nếu người dùng đã có ảnh bìa -->
+                    <img src="{{ asset('storage/' . $user->cover_image) }}" alt="Cover Image" class="absolute inset-0 w-full h-full object-cover" />
+                    @else
+                    <!-- Nếu chưa có ảnh bìa -->
+                    <img src="{{ asset('imgs/default-cover.png') }}" alt="Default Cover" class="absolute inset-0 w-full h-full object-cover" />
+                    @endif
+                    <div class="absolute inset-0 bg-black/10"></div>
+
+                    <!-- Nút Đổi ảnh bìa -->
+                    <a href="{{ route('my.profile.edit') }}" class="owner-control relative z-10 px-3 py-1.5 rounded-lg bg-surface/90 hover:bg-surface text-on-surface text-label-sm font-semibold flex items-center gap-1.5 backdrop-blur-md shadow-sm transition-transform active:scale-95">
                         <span class="material-symbols-outlined text-[16px]">add_a_photo</span>
                         <span>Đổi ảnh bìa</span>
-                    </button>
+                    </a>
                 </div>
                 <!-- Profile Header Identity Bar -->
-                <div class="px-space-md lg:px-space-lg pb-space-lg">
-                    <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-space-lg -mt-16 sm:-mt-20 relative z-20">
+                <div class="px-space-md lg:px-space-lg pb-space-lg mt-5">
+                    <div class="flex flex-col lg:flex-row lg:items-start justify-between gap-space-lg relative z-20">
                         <!-- Left: Avatar + Basic Info -->
                         <div class="flex flex-col sm:flex-row items-center sm:items-start gap-space-md max-w-3xl">
                             <!-- Avatar with eKYC Verified Shield -->
                             <div class="relative shrink-0">
                                 <div class="w-28 h-28 sm:w-32 sm:h-32 rounded-xl p-1 bg-surface-container-lowest shadow-md">
-                                    <img class="w-full h-full object-cover rounded-lg" data-alt="Portrait photo of Nguyen Minh Tuan, a sharp and friendly Vietnamese male photographer in his late 20s with a modern haircut, wearing a crisp dark casual shirt, smiling confidently in soft studio lighting with subtle teal and slate undertones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCKB82K4TbRLeA4uc3JJ9wZJteMtLSF-hsFcu_6i20kcEu2qluyq3nr4mIKySgMG4w4_QRclXR7uS3AGTyavgQHd1q1ZP4S2XoPc05OQIktOp6_LMyxC0BM_Ad1zEwXeMKvisvFfLnznsuwQvlxuyLw6tqTKKYxGZutbd0EPAzLDXP2kO5V-GBw24RXIbO-XKkUiIwnmUZ2ea1dsofuM9PxSWA1bOofJw4H4_r3RKAT7fY1v-OW21Y" />
-                                </div>
-                                <div class="absolute -bottom-1 -right-1 bg-secondary text-on-secondary w-7 h-7 rounded-full flex items-center justify-center shadow-md" title="Đã đối chiếu sinh trắc học VNeID Cấp 2">
-                                    <span class="material-symbols-outlined text-[16px]">verified</span>
+                                    <img class="w-full h-full object-cover rounded-lg" src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('imgs/default-avatar.png') }}" />
                                 </div>
                             </div>
                             <!-- Text Content -->
                             <div class="flex flex-col items-center sm:items-start text-center sm:text-left pt-2">
                                 <div class="flex flex-wrap items-center justify-center sm:justify-start gap-2 mb-1">
-                                    <h1 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">Nguyễn Minh Tuấn</h1>
-                                    <span class="font-label-md text-label-md text-on-surface-variant font-medium">@tuannm_photo</span>
-                                    <span class="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed-variant font-label-sm text-label-sm font-bold">
-                                        <span class="material-symbols-outlined text-[13px]">military_tech</span> SuperHost &amp; Renter Vàng
-                                    </span>
+                                    <h1 class="font-headline-md text-headline-md text-on-surface font-bold tracking-tight">{{ $user->name }}</h1>
+                                    <span class="font-label-md text-label-md text-on-surface-variant font-medium">{{ '@' . $user->username }}</span>
                                 </div>
                                 <p class="font-body-md text-body-md text-on-surface mb-2 max-w-xl">
-                                    Nhiếp ảnh gia tự do &amp; Đam mê du lịch cắm trại tại Hà Nội. Luôn bảo quản thiết bị kỹ lưỡng, đúng hẹn và sẵn sàng chia sẻ kinh nghiệm sử dụng thực tế.
+                                    {{ $user->bio ?: '' }}
                                 </p>
                                 <div class="flex flex-wrap items-center justify-center sm:justify-start gap-y-1 gap-x-4 text-on-surface-variant font-body-sm text-body-sm">
                                     <span class="inline-flex items-center gap-1">
                                         <span class="material-symbols-outlined text-[16px] text-secondary">location_on</span>
-                                        Ba Đình, Hà Nội
+                                        {{ $user->location ? $user->location : 'Chưa cập nhật' }}
                                     </span>
                                     <span class="inline-flex items-center gap-1">
                                         <span class="material-symbols-outlined text-[16px]">calendar_month</span>
-                                        Thành viên từ: 03/2023
-                                    </span>
-                                    <span class="inline-flex items-center gap-1.5 font-medium text-secondary">
-                                        <span class="w-2 h-2 rounded-full bg-secondary animate-pulse"></span>
-                                        Đang hoạt động (Online)
+                                        Thành viên từ: {{ $user->created_at?->format('m/Y') }}
                                     </span>
                                 </div>
                             </div>
                         </div>
                         <!-- Right: Owner Action CTA Buttons -->
                         <div class="flex flex-wrap items-center justify-center sm:justify-end gap-2.5 pt-2">
-                            <button class="owner-control px-4 py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-semibold flex items-center gap-2 shadow-sm transition-all" type="button">
+                            <a href="{{ route('my.profile.edit') }}"
+                                class="owner-control px-4 py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-semibold flex items-center gap-2 shadow-sm transition-all">
                                 <span class="material-symbols-outlined text-[18px]">edit</span>
                                 <span>Chỉnh sửa hồ sơ</span>
-                            </button>
-                            <button class="owner-control px-3.5 py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg font-semibold flex items-center gap-1.5 transition-colors" type="button">
-                                <span class="material-symbols-outlined text-[18px]">settings</span>
-                                <span class="hidden sm:inline">Cài đặt</span>
-                            </button>
-                            <button class="px-3.5 py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg font-semibold flex items-center gap-1.5 transition-colors" title="Sao chép liên kết hồ sơ" type="button">
-                                <span class="material-symbols-outlined text-[18px]">share</span>
-                                <span class="hidden sm:inline">Chia sẻ</span>
-                            </button>
-                            <button class="visitor-only hidden px-4 py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary font-label-lg text-label-lg font-semibold items-center gap-2 shadow-sm transition-all" id="contactHostBtn" type="button">
-                                <span class="material-symbols-outlined text-[18px]">chat</span>
-                                <span>Nhắn tin cho Tuấn</span>
-                            </button>
+                            </a>
+                            <a href="{{ route('my.activity') }}" class="owner-control px-3.5 py-2.5 rounded-lg bg-surface-container hover:bg-surface-container-high text-on-surface font-label-lg text-label-lg font-semibold flex items-center gap-1.5 transition-colors" type="button">
+                                <span class="material-symbols-outlined text-[18px]">space_dashboard</span>
+                                <span>Bảng hoạt động cá nhân</span>
+                            </a>
                         </div>
                     </div>
-                    <!-- Trust & Metrics Strip -->
-                    <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 mt-space-lg pt-space-md bg-surface-container-low rounded-xl p-space-md">
-                        <div class="flex flex-col">
-                            <span class="font-label-sm text-label-sm text-on-surface-variant flex items-center gap-1">
-                                Điểm Tín Nhiệm (TrustScore)
-                                <span class="material-symbols-outlined text-[14px] text-secondary cursor-help" title="Dựa trên lịch sử thanh toán, hoàn trả tài sản đúng hạn và CCCD định danh">info</span>
-                            </span>
-                            <div class="flex items-baseline gap-1.5 mt-1">
-                                <span class="font-headline-md text-headline-md text-on-surface font-bold">98</span>
-                                <span class="font-label-sm text-label-sm text-on-surface-variant">/100</span>
-                                <span class="ml-1 px-1.5 py-0.5 rounded bg-tertiary-fixed text-on-tertiary-fixed font-label-sm text-label-sm font-bold">Hạng Vàng</span>
-                            </div>
-                            <span class="font-body-sm text-body-sm text-secondary font-medium">Miễn/giảm 50% tiền cọc</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-label-sm text-label-sm text-on-surface-variant">Đánh giá trung bình</span>
-                            <div class="flex items-baseline gap-1 mt-1">
-                                <span class="font-headline-md text-headline-md text-on-surface font-bold">4.96</span>
-                                <div class="flex text-amber-500">
-                                    <span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">star</span>
-                                </div>
-                            </div>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant">Từ 112 lượt nhận xét</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-label-sm text-label-sm text-on-surface-variant">Giao dịch thành công</span>
-                            <div class="flex items-baseline gap-1 mt-1">
-                                <span class="font-headline-md text-headline-md text-on-surface font-bold">58</span>
-                                <span class="font-label-sm text-label-sm text-on-surface-variant">lượt</span>
-                            </div>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant">42 cho thuê • 16 đi thuê</span>
-                        </div>
-                        <div class="flex flex-col">
-                            <span class="font-label-sm text-label-sm text-on-surface-variant">Tỷ lệ phản hồi tin nhắn</span>
-                            <div class="flex items-baseline gap-1 mt-1">
-                                <span class="font-headline-md text-headline-md text-on-surface font-bold">98%</span>
-                            </div>
-                            <span class="font-body-sm text-body-sm text-on-surface-variant">Phản hồi trong ~8 phút</span>
-                        </div>
-                        <div class="flex flex-col col-span-2 sm:col-span-1">
-                            <span class="font-label-sm text-label-sm text-on-surface-variant">Tỷ lệ hoàn trả đúng hẹn</span>
-                            <div class="flex items-baseline gap-1 mt-1">
-                                <span class="font-headline-md text-headline-md text-on-surface font-bold text-secondary">100%</span>
-                            </div>
-                            <span class="font-body-sm text-body-sm text-secondary font-medium">Cam kết đúng giờ tuyệt đối</span>
-                        </div>
-                    </div>
+
                 </div>
             </section>
             <!-- Navigation Tabs -->
@@ -167,9 +95,6 @@
                     <span>Đánh giá cộng đồng</span>
                     <span class="px-1.5 py-0.2 rounded-full bg-surface-container-highest text-on-surface font-label-sm text-label-sm">112</span>
                 </button>
-                <button class="px-space-md py-2.5 rounded-lg bg-surface-container-lowest hover:bg-surface-container text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg font-semibold shrink-0 transition-colors" type="button">
-                    Lịch sử &amp; Hoạt động
-                </button>
             </div>
             <!-- Main Content Two-Column Grid -->
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
@@ -180,7 +105,7 @@
                         <div class="flex items-center justify-between mb-space-md">
                             <div>
                                 <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Tài sản cho thuê nổi bật</h2>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">Thiết bị bảo quản định kỳ, có hợp đồng điện tử &amp; cọc qua RentShare Escrow</p>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">Thiết bị bảo quản định kỳ, có hợp đồng điện tử &amp; cọc qua ShareHub Escrow</p>
                             </div>
                             <a class="font-label-lg text-label-lg text-secondary hover:underline flex items-center gap-1 font-semibold" href="#">
                                 <span>Xem tất cả (6)</span>
@@ -384,7 +309,7 @@
                                     </div>
                                 </div>
                                 <p class="font-body-md text-body-md text-on-surface">
-                                    “Anh Tuấn bàn giao máy ảnh Sony A7 IV cực kỳ cẩn thận, pin sạc 100%, thẻ nhớ xịn kèm hộp chống ẩm. Hướng dẫn sử dụng phím tắt rất nhiệt tình, thủ tục ký quỹ Escrow của RentShare nhanh gọn chỉ mất 2 phút. Sẽ thuê tiếp dài dài!”
+                                    “Anh Tuấn bàn giao máy ảnh Sony A7 IV cực kỳ cẩn thận, pin sạc 100%, thẻ nhớ xịn kèm hộp chống ẩm. Hướng dẫn sử dụng phím tắt rất nhiệt tình, thủ tục ký quỹ Escrow của ShareHub nhanh gọn chỉ mất 2 phút. Sẽ thuê tiếp dài dài!”
                                 </p>
                             </div>
                             <!-- Review 2: From a host -->
@@ -426,38 +351,25 @@
                             <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold">Bảo chứng &amp; Xác thực</h3>
                         </div>
                         <div class="flex flex-col gap-space-md">
+
                             <div class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">check_circle</span>
+                                <span class="
+                                    material-symbols-outlined text-[20px] shrink-0 mt-0.5 {{ $user->hasVerifiedEmail() ? 'text-secondary' : 'text-error' }}
+                                    ">
+                                    {{ $user->hasVerifiedEmail() ? 'check_circle' : 'pending' }}
+                                </span>
+
                                 <div class="flex flex-col">
-                                    <span class="font-label-lg text-label-lg text-on-surface font-semibold">Định danh CCCD Cấp 2</span>
-                                    <span class="font-body-sm text-body-sm text-on-surface-variant">Đối chiếu sinh trắc học VNeID</span>
+                                    <span class="font-label-lg text-label-lg text-on-surface font-semibold">
+                                        Email
+                                    </span>
+
+                                    <span class="font-body-sm text-body-sm text-on-surface-variant">
+                                        {{ $user->hasVerifiedEmail() ? 'Đã xác minh email' : 'Chưa xác minh email' }}
+                                    </span>
                                 </div>
                             </div>
-                            <div class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">check_circle</span>
-                                <div class="flex flex-col">
-                                    <span class="font-label-lg text-label-lg text-on-surface font-semibold">Số điện thoại &amp; Email</span>
-                                    <span class="font-body-sm text-body-sm text-on-surface-variant">Đã xác minh OTP 2 lớp bảo mật</span>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">check_circle</span>
-                                <div class="flex flex-col">
-                                    <span class="font-label-lg text-label-lg text-on-surface font-semibold">Tài khoản Ngân hàng Escrow</span>
-                                    <span class="font-body-sm text-body-sm text-on-surface-variant">Vietcombank - Chính chủ NGUYEN MINH TUAN</span>
-                                </div>
-                            </div>
-                            <div class="flex items-start gap-3">
-                                <span class="material-symbols-outlined text-secondary text-[20px] shrink-0 mt-0.5">shield</span>
-                                <div class="flex flex-col">
-                                    <span class="font-label-lg text-label-lg text-on-surface font-semibold">Bảo hiểm RentShare Shield</span>
-                                    <span class="font-body-sm text-body-sm text-on-surface-variant">Bảo vệ rủi ro hỏng hóc tài sản tới 50 triệu đồng/giao dịch</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="mt-space-md pt-space-md border-t-0 bg-surface-container-low rounded-lg p-space-sm flex items-center justify-between text-body-sm">
-                            <span class="text-on-surface-variant font-medium">Hồ sơ xác minh lúc:</span>
-                            <span class="font-semibold text-on-surface">12/03/2023</span>
+
                         </div>
                     </div>
                     <!-- Sidebar Card 2: Dual Role Performance -->
@@ -539,7 +451,7 @@
                         </div>
                         <span class="font-headline-sm text-headline-sm text-on-surface font-bold">Thành viên Cam kết Vàng</span>
                         <p class="font-body-sm text-body-sm text-on-surface-variant mt-1 mb-space-md">
-                            Nguyễn Minh Tuấn tuân thủ bộ quy tắc ứng xử RentShare Trust Standard, không hủy lịch phút chót và giữ gìn tài sản chung.
+                            Nguyễn Minh Tuấn tuân thủ bộ quy tắc ứng xử ShareHub Trust Standard, không hủy lịch phút chót và giữ gìn tài sản chung.
                         </p>
                         <button class="text-secondary font-label-md text-label-md font-semibold hover:underline" type="button">
                             Tìm hiểu tiêu chuẩn cộng đồng
@@ -548,51 +460,6 @@
                 </aside>
             </div>
         </div>
-        <script>
-            (function initProfileModeToggle() {
-                const toggleBtn = document.getElementById('toggleViewModeBtn');
-                const toggleBtnText = document.getElementById('toggleBtnText');
-                const currentViewLabel = document.getElementById('currentViewLabel');
-                const viewNotice = document.getElementById('viewStateNotice');
-                const contactBtn = document.getElementById('contactHostBtn');
-                const ownerControls = document.querySelectorAll('.owner-control');
-                const visitorOnlyControls = document.querySelectorAll('.visitor-only');
-
-                let isOwnerMode = true;
-
-                if (toggleBtn) {
-                    toggleBtn.addEventListener('click', function() {
-                        isOwnerMode = !isOwnerMode;
-
-                        if (isOwnerMode) {
-                            // Mode: Owner (Profile Manager)
-                            currentViewLabel.textContent = 'Chủ tài khoản (Đang quản lý hồ sơ cá nhân)';
-                            toggleBtnText.textContent = 'Xem dưới góc nhìn khách xem';
-                            viewNotice.classList.remove('bg-primary-container');
-                            viewNotice.classList.add('bg-secondary');
-
-                            ownerControls.forEach(el => el.classList.remove('hidden'));
-                            visitorOnlyControls.forEach(el => {
-                                el.classList.add('hidden');
-                                el.classList.remove('flex');
-                            });
-                        } else {
-                            // Mode: Visitor (Public Profile)
-                            currentViewLabel.textContent = 'Chế độ xem công khai (Khách ghé thăm nhìn thấy)';
-                            toggleBtnText.textContent = 'Quay về quyền quản trị hồ sơ';
-                            viewNotice.classList.remove('bg-secondary');
-                            viewNotice.classList.add('bg-primary-container');
-
-                            ownerControls.forEach(el => el.classList.add('hidden'));
-                            visitorOnlyControls.forEach(el => {
-                                el.classList.remove('hidden');
-                                el.classList.add('flex');
-                            });
-                        }
-                    });
-                }
-            })();
-        </script>
     </div>
 </main>
 @endsection

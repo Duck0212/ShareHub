@@ -5,10 +5,16 @@
 <main class="max-w-7xl mx-auto px-6 py-6 space-y-6">
     <!-- Profile Master Header -->
     <div class="bg-white rounded-2xl border border-border shadow-sm overflow-hidden">
-        <!-- Minimalist Cover -->
-        <div class="h-40 md:h-52 bg-gradient-to-r from-slate-900 via-slate-800 to-teal-900 relative">
-            <div class="absolute inset-0 opacity-15 bg-[radial-gradient(#ffffff_1px,transparent_1px)] [background-size:16px_16px]"></div>
-            <div class="absolute top-4 right-6">
+        <!-- Minimalist Cover Banner -->
+        <div class="h-40 md:h-52 bg-gradient-to-r from-slate-900 via-slate-800 to-teal-900 relative overflow-hidden">
+            @if(!empty($user->cover_image))
+            <img src="{{ asset('storage/' . $user->cover_image) }}" alt="Cover Image" class="absolute inset-0 w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-black/10"></div>
+            @else
+            <img src="{{ asset('imgs/default-cover.png') }}" alt="Default Cover" class="absolute inset-0 w-full h-full object-cover" />
+            @endif
+
+            <div class="absolute top-4 right-6 z-10">
                 <span class="bg-white/20 backdrop-blur text-white text-xs px-3 py-1 rounded-full flex items-center gap-1.5 font-medium">
                     <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
                     Đang trực tuyến
@@ -17,19 +23,19 @@
         </div>
 
         <!-- User Identification & Dual Metrics -->
-        <div class="px-6 pb-6 relative -mt-16 md:-mt-20">
+        <div class="px-6 pb-6 relative -mt-16 md:-mt-10">
             <div class="flex flex-col lg:flex-row lg:items-end justify-between gap-6 pb-6 border-b border-border">
                 <!-- Left: Avatar & Info -->
                 <div class="flex flex-col sm:flex-row items-start sm:items-end gap-5">
                     <div class="relative">
-                        <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuD2NN35lNpfGKcI8dXstQlMb0S7QSyFLtAX7ukuI4lsSCtRhN308LIYTZBeZfMDLZwkwD5QhA-QC4CmPedmPAqf6D-wjc1QDKmGgmffvONXxa082xqJfcprdDXOcbu-iw2CX7CWEsts53WTdAqCNt0rqLPdZ5Sh4imC4aFw-fwbdrMFiMXrRr3peQM7hmZdRf4ybA2wkDC1kIGh9lrDCJXYYuveHFJ6rauMkZaXIDOGUHMmNwuAP5E" alt="Nguyễn Minh Tuấn" class="w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover ring-4 ring-white shadow-xl bg-white" />
+                        <img src="{{ $user->avatar ? asset('storage/' . $user->avatar) : asset('imgs/default-avatar.png') }}" alt="{{ $user->name }}" class="w-28 h-28 md:w-36 md:h-36 rounded-2xl object-cover ring-4 ring-white shadow-xl bg-white" />
                         <div class="absolute -bottom-2 -right-2 bg-secondary text-white p-1.5 rounded-xl shadow-md ring-2 ring-white" title="Đã xác thực CCCD & VNeID">
                             <span class="material-symbols-outlined text-[18px]">verified</span>
                         </div>
                     </div>
                     <div class="space-y-1.5">
                         <div class="flex flex-wrap items-center gap-2">
-                            <h1 class="text-2xl md:text-3xl font-bold text-text-main">Nguyễn Minh Tuấn</h1>
+                            <h1 class="text-2xl md:text-3xl font-bold text-text-main">{{ $user->name }}</h1>
                             <span class="bg-teal-50 text-secondary text-xs px-2.5 py-1 rounded-full font-semibold flex items-center gap-1">
                                 <span class="material-symbols-outlined text-[15px]">shield</span>
                                 Đã xác thực CCCD & VNeID
@@ -38,11 +44,11 @@
                         <div class="flex flex-wrap items-center gap-x-4 gap-y-1 text-xs text-text-muted">
                             <span class="flex items-center gap-1">
                                 <span class="material-symbols-outlined text-[15px]">location_on</span>
-                                Quận 1, TP. Hồ Chí Minh
+                                {{ $user->location ?: 'Chưa cập nhật địa điểm' }}
                             </span>
                             <span class="flex items-center gap-1">
                                 <span class="material-symbols-outlined text-[15px]">calendar_today</span>
-                                Thành viên từ tháng 3/2022
+                                Thành viên từ {{ $user->created_at?->format('m/Y') }}
                             </span>
                             <span class="flex items-center gap-1 text-text-main font-semibold">
                                 <span class="material-symbols-outlined text-[15px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
@@ -184,31 +190,33 @@
                 Giới thiệu bản thân & Triết lý chia sẻ
             </h2>
             <p class="text-sm text-text-main leading-relaxed">
-                "Nhiếp ảnh gia tự do & đam mê camping. Mình có nhiều thiết bị quay chụp và lều trại ít dùng nên cho mọi người thuê với giá hợp lý, đồng thời cũng hay thuê xe cộ khi đi công tác các tỉnh. Luôn trân trọng và giữ gìn đồ đạc cẩn thận như của chính mình!"
+                "{{ $user->bio ?: 'Chưa cập nhật phần giới thiệu bản thân.' }}"
             </p>
+            @if(!empty($user->tags))
             <div class="flex flex-wrap gap-2 pt-2">
-                <span class="text-xs bg-slate-100 text-text-muted px-3 py-1 rounded-full">#NhiepAnhSony</span>
-                <span class="text-xs bg-slate-100 text-text-muted px-3 py-1 rounded-full">#OutdoorCamping</span>
-                <span class="text-xs bg-slate-100 text-text-muted px-3 py-1 rounded-full">#XeMayQuan1</span>
-                <span class="text-xs bg-slate-100 text-text-muted px-3 py-1 rounded-full">#TraDoDungHen100%</span>
+                @foreach((is_array($user->tags) ? $user->tags : explode(',', $user->tags)) as $tag)
+                <span class="text-xs bg-slate-100 text-text-muted px-3 py-1 rounded-full">#{{ trim($tag) }}</span>
+                @endforeach
             </div>
+            @endif
         </div>
 
-        <!-- Section: Featured Assets for Rent (Tài sản đang cho thuê của Tuấn) -->
+        <!-- Section: Featured Assets for Rent -->
         <div class="space-y-4">
             <div class="flex items-center justify-between">
                 <div>
-                    <h2 class="text-lg font-bold text-text-main">Tài sản nổi bật đang cho thuê của Tuấn</h2>
+                    <h2 class="text-lg font-bold text-text-main">Tài sản nổi bật đang cho thuê của {{ $user->name }}</h2>
                     <p class="text-xs text-text-muted">Các thiết bị và xe cộ sẵn sàng bàn giao trong ngày</p>
                 </div>
                 <a href="#" class="text-xs font-semibold text-secondary hover:underline flex items-center gap-1">
-                    <span>Xem cả 6 tài sản</span>
+                    <span>Xem tất cả tài sản</span>
                     <span class="material-symbols-outlined text-[16px]">arrow_forward</span>
                 </a>
             </div>
 
+            <!-- Asset Grid Cards (Giữ nguyên cấu trúc thẻ mẫu chuẩn) -->
             <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-                <!-- Card 1: Sony A7 IV -->
+                <!-- Card 1 -->
                 <div class="bg-white rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col justify-between">
                     <div>
                         <div class="relative aspect-4/3 bg-slate-100 overflow-hidden">
@@ -216,13 +224,10 @@
                             <span class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-secondary shadow-xs">
                                 Sẵn sàng giao ngay
                             </span>
-                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-[11px] px-2 py-0.5 rounded backdrop-blur">
-                                Máy ảnh & Lens
-                            </span>
                         </div>
                         <div class="p-4 space-y-2">
                             <div class="flex items-center justify-between text-xs text-text-muted">
-                                <span>Quận 1, TP.HCM</span>
+                                <span>{{ $user->city ?: 'TP.HCM' }}</span>
                                 <span class="font-semibold text-text-main flex items-center gap-0.5">
                                     <span class="material-symbols-outlined text-[14px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
                                     5.0 (28 lượt)
@@ -231,7 +236,6 @@
                             <h3 class="text-sm font-bold text-text-main line-clamp-1 group-hover:text-secondary transition-colors">
                                 Sony Alpha A7 Mark IV + Lens 24-70mm GM
                             </h3>
-                            <p class="text-xs text-text-muted line-clamp-2">Máy đẹp 98%, kèm 2 pin dung lượng cao, sạc kép và thẻ nhớ 128GB tốc độ cao.</p>
                         </div>
                     </div>
                     <div class="p-4 pt-0 border-t border-border flex items-center justify-between mt-2">
@@ -244,98 +248,6 @@
                         </button>
                     </div>
                 </div>
-
-                <!-- Card 2: Vespa Sprint -->
-                <div class="bg-white rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col justify-between">
-                    <div>
-                        <div class="relative aspect-4/3 bg-slate-100 overflow-hidden">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuCzZmGh-Np_Legd-nP4fq9ETH-Rrcb16F1caq_DcxyrLj4SyaHK7VmXHJKQb7CqXg5UAF_Arjao8ZInCJSmuK-Syn7dOh7Vw_sGpyie4wAW3OMmVUz7GZzefU23uMcDwiENZDojq0ZIpYsGMtJrhUMY1QqIoT-pKdQ4sviBS3mT7QbXnY2F0PdBOHYfzbEO3j21bxs7Zj95F8nX8dWECmQjoaveS900cVIcvHSvh_xHq_HVORmUfLo" alt="Vespa Sprint" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-secondary shadow-xs">
-                                Sẵn sàng giao ngay
-                            </span>
-                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-[11px] px-2 py-0.5 rounded backdrop-blur">
-                                Xe máy tay ga
-                            </span>
-                        </div>
-                        <div class="p-4 space-y-2">
-                            <div class="flex items-center justify-between text-xs text-text-muted">
-                                <span>Quận 1, TP.HCM</span>
-                                <span class="font-semibold text-text-main flex items-center gap-0.5">
-                                    <span class="material-symbols-outlined text-[14px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
-                                    4.9 (42 lượt)
-                                </span>
-                            </div>
-                            <h3 class="text-sm font-bold text-text-main line-clamp-1 group-hover:text-secondary transition-colors">
-                                Vespa Sprint S 150 ABS (Xám Xi Măng Thể Thao)
-                            </h3>
-                            <p class="text-xs text-text-muted line-clamp-2">Bảo dưỡng chính hãng, máy êm vọt. Kèm thùng sau chứa hành lý và 2 mũ 3/4.</p>
-                        </div>
-                    </div>
-                    <div class="p-4 pt-0 border-t border-border flex items-center justify-between mt-2">
-                        <div>
-                            <span class="text-base font-bold text-secondary">280.000₫</span>
-                            <span class="text-xs text-text-muted">/ngày</span>
-                        </div>
-                        <button class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-primary hover:text-white text-xs font-semibold text-text-main transition-colors">
-                            Thuê ngay
-                        </button>
-                    </div>
-                </div>
-
-                <!-- Card 3: Camping Glamping Tent -->
-                <div class="bg-white rounded-2xl border border-border overflow-hidden shadow-sm hover:shadow-md transition-shadow group flex flex-col justify-between">
-                    <div>
-                        <div class="relative aspect-4/3 bg-slate-100 overflow-hidden">
-                            <img src="https://lh3.googleusercontent.com/aida-public/AB6AXuBurMCJ1TL3wQIVMaVhjXzRIQc80YcUV2pxXnKoe51ne0s102r_rkf8e3_TSYu7YPXBukE9GAswhTbJ1aXRkHmJwb58lbj1DqUfQFWlrgtMOnbmJgnUy0el0cQibJnGn1RftlSTXVbzmUnw9JLQq-lNZz5-yrL7sfPFfWX41WwY10pDYS7dcENdtTuUyhjw8LualQw-vQ034q09bq51czGWQbZH0-c2QuuUPH6QPZZpq-nMijxSuyY" alt="Lều cắm trại" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" />
-                            <span class="absolute top-3 left-3 bg-white/90 backdrop-blur px-2.5 py-0.5 rounded-full text-[11px] font-semibold text-secondary shadow-xs">
-                                Sẵn sàng giao ngay
-                            </span>
-                            <span class="absolute bottom-3 left-3 bg-black/60 text-white text-[11px] px-2 py-0.5 rounded backdrop-blur">
-                                Cắm trại & Dã ngoại
-                            </span>
-                        </div>
-                        <div class="p-4 space-y-2">
-                            <div class="flex items-center justify-between text-xs text-text-muted">
-                                <span>Quận 1 / Giao tận nơi</span>
-                                <span class="font-semibold text-text-main flex items-center gap-0.5">
-                                    <span class="material-symbols-outlined text-[14px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
-                                    5.0 (14 lượt)
-                                </span>
-                            </div>
-                            <h3 class="text-sm font-bold text-text-main line-clamp-1 group-hover:text-secondary transition-colors">
-                                Bộ Lều Glamping Naturehike 4 người + Bàn Ghế Gỗ
-                            </h3>
-                            <p class="text-xs text-text-muted line-clamp-2">Full phụ kiện: Bạt tăng che mưa nắng, đệm hơi, đèn bão vintage và bếp dã ngoại.</p>
-                        </div>
-                    </div>
-                    <div class="p-4 pt-0 border-t border-border flex items-center justify-between mt-2">
-                        <div>
-                            <span class="text-base font-bold text-secondary">320.000₫</span>
-                            <span class="text-xs text-text-muted">/2 ngày 1 đêm</span>
-                        </div>
-                        <button class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-primary hover:text-white text-xs font-semibold text-text-main transition-colors">
-                            Thuê ngay
-                        </button>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!-- Active Rental Request by Tuan (Renter side) -->
-        <div class="bg-white rounded-2xl p-6 border border-border shadow-sm flex flex-col md:flex-row md:items-center justify-between gap-4">
-            <div class="space-y-1">
-                <div class="flex items-center gap-2">
-                    <span class="bg-teal-50 text-secondary text-xs px-2.5 py-0.5 rounded-full font-semibold">Yêu cầu tìm thuê đang mở</span>
-                    <span class="text-xs text-text-muted">Đăng 2 ngày trước</span>
-                </div>
-                <h3 class="text-base font-bold text-text-main">Cần thuê Flycam DJI Mini 4 Pro hoặc Mavic 3 (3 ngày quay tại Măng Đen)</h3>
-                <p class="text-xs text-text-muted">Ngân sách: 400.000₫ - 500.000₫/ngày • Cam kết cọc 100% qua quỹ bảo chứng RentShare</p>
-            </div>
-            <div class="flex items-center gap-3 shrink-0">
-                <span class="text-xs text-text-muted">Đã có 4 chủ đồ gửi báo giá</span>
-                <button class="bg-primary hover:bg-slate-800 text-white text-xs font-semibold px-4 py-2.5 rounded-xl transition-colors">
-                    Gửi báo giá cho Tuấn
-                </button>
             </div>
         </div>
 
@@ -344,39 +256,22 @@
             <div class="flex items-center justify-between">
                 <div>
                     <h2 class="text-lg font-bold text-text-main">Đánh giá hai chiều minh bạch</h2>
-                    <p class="text-xs text-text-muted">Hiển thị song song đánh giá từ Khách thuê đồ và Chủ tài sản đã cho Tuấn mượn</p>
+                    <p class="text-xs text-text-muted">Hiển thị song song đánh giá từ Khách thuê đồ và Chủ tài sản</p>
                 </div>
                 <span class="text-xs font-semibold text-secondary">4.95 / 5.0 (106 nhận xét)</span>
             </div>
 
             <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <!-- Review 1: Tuan as Landlord -->
                 <div class="p-4 rounded-xl bg-white border border-border shadow-sm space-y-2">
                     <div class="flex items-center justify-between text-xs">
                         <span class="px-2 py-0.5 rounded bg-slate-100 text-text-muted font-medium">Đánh giá từ Khách thuê đồ</span>
                         <span class="text-amber-500 font-bold">5.0 ★</span>
                     </div>
                     <p class="text-xs text-text-muted leading-relaxed">
-                        "Thuê máy ảnh Sony của anh Tuấn đi chụp kỷ yếu. Máy mới nguyên, sensor sạch sẽ, anh còn cho mượn kèm túi chống sốc rất xịn. Sẽ tiếp tục ủng hộ!"
+                        "Giao dịch uy tín, thiết bị bảo quản rất cẩn thận và đúng mô tả. Rất hài lòng!"
                     </p>
                     <div class="flex items-center gap-2 pt-2 border-t border-border/60 text-[11px] text-text-muted">
                         <span class="font-semibold text-text-main">Vũ Phương Thảo</span>
-                        <span>• Thuê Sony A7IV</span>
-                    </div>
-                </div>
-
-                <!-- Review 2: Tuan as Renter -->
-                <div class="p-4 rounded-xl bg-white border border-border shadow-sm space-y-2">
-                    <div class="flex items-center justify-between text-xs">
-                        <span class="px-2 py-0.5 rounded bg-teal-50 text-secondary font-medium">Đánh giá từ Chủ tài sản cho Tuấn thuê</span>
-                        <span class="text-amber-500 font-bold">5.0 ★</span>
-                    </div>
-                    <p class="text-xs text-text-muted leading-relaxed">
-                        "Bạn Tuấn thuê bộ lều dã ngoại 4 người của mình. Nhận đồ đúng giờ, lúc trả lại thì vệ sinh sạch sẽ tinh tươm, gấp gọn gàng. Rất uy tín và văn minh!"
-                    </p>
-                    <div class="flex items-center gap-2 pt-2 border-t border-border/60 text-[11px] text-text-muted">
-                        <span class="font-semibold text-text-main">Trần Văn Hưng</span>
-                        <span>• Cho thuê Bộ Lều Glamping</span>
                     </div>
                 </div>
             </div>
