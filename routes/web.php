@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Asset\AssetController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\User\UserController;
 use Illuminate\Support\Facades\Route;
@@ -14,27 +15,30 @@ Route::get('/', [HomeController::class, 'home'])
 Route::prefix('assets')
     ->name('assets.')
     ->group(function () {
-        //Kho tài sản
-        Route::view('/', 'assets.index')->name('index');
+        // Kho tài sản công khai
+        Route::get('/', [AssetController::class, 'index'])->name('index');
 
-        //Đăng tài sản cho thuê
-        Route::view('/create', 'assets.create')
-            ->middleware('auth')
-            ->name('create');
+        // Các thao tác cần đăng nhập
+        Route::middleware('auth')->group(function () {
+            Route::get('/create', [AssetController::class, 'create'])->name('create');
+            Route::post('/', [AssetController::class, 'store'])->name('store');
 
-        //Danh sách tài sản của tôi
-        Route::view('/my-assets', 'assets.my-assets')
-            ->middleware('auth')
-            ->name('my-assets');
+            Route::get('/my-assets', [AssetController::class, 'myAssets'])->name('my-assets');
 
-        //Chỉnh sửa tài sản
-        Route::view('/{asset}/edit', 'assets.edit')
-            ->middleware('auth')
-            ->name('edit');
+            Route::get('/{asset}/edit', [AssetController::class, 'edit'])->name('edit');
+            Route::put('/{asset}', [AssetController::class, 'update'])->name('update');
 
-        //Chi tiết tài sản
-        Route::view('/{asset}', 'assets.show')->name('show');
+            Route::patch('/{asset}/status', [AssetController::class, 'toggleStatus'])
+                ->name('toggle-status');
+
+            Route::delete('/{asset}/images/{image}', [AssetController::class, 'destroyImage'])
+                ->name('images.destroy');
+        });
+
+        // Đặt sau các route cụ thể như /create, /my-assets, /{asset}/edit
+        Route::get('/{asset}', [AssetController::class, 'show'])->name('show');
     });
+
 
 //-----Messages routes-----
 Route::prefix('messages')

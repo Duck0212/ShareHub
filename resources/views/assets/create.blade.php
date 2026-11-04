@@ -3,26 +3,35 @@
 @section('content')
 <main class="w-full pt-20 bg-background min-h-screen">
     <div class="flex flex-col w-full">
-        <!-- Top Progress & Header Bar -->
+        <!-- Header Bar & Breadcrumb -->
         <div class="w-full bg-surface-container-low py-space-md shadow-sm">
-            <div class="max-w-[1280px] mx-auto px-margin-mobile lg:px-margin flex flex-col gap-space-sm">
+            <div class="max-w-5xl mx-auto px-margin-mobile lg:px-margin flex flex-col gap-space-sm">
                 <!-- Breadcrumb -->
-                <nav class="flex items-center gap-space-xs font-label-md text-label-md text-on-surface-variant">
-                    <a class="hover:text-secondary transition-colors" href="#">Trang chủ</a>
+                <div class="flex items-center gap-2 text-on-surface-variant font-label-md text-label-lg">
+                    <a class="hover:text-primary transition-colors flex items-center gap-1" href="{{ route('home') }}">
+                        <span class="material-symbols-outlined text-[16px]">home</span>
+                        Trang chủ
+                    </a>
                     <span class="material-symbols-outlined text-[14px]">chevron_right</span>
-                    <a class="hover:text-secondary transition-colors" href="#">Tài sản của tôi</a>
+                    <a class="hover:text-primary transition-colors flex items-center gap-1" href="{{ route('my.activity') }}">
+                        Hoạt động cá nhân
+                    </a>
+                    <span class="material-symbols-outlined text-[14px]">chevron_right</span>
+                    <a class="hover:text-primary transition-colors flex items-center gap-1" href="{{ route('assets.my-assets') }}">
+                        Tài sản của tôi
+                    </a>
                     <span class="material-symbols-outlined text-[14px]">chevron_right</span>
                     <span class="text-on-surface font-semibold">Đăng tài sản mới</span>
-                </nav>
-                <!-- Page Heading & Subtitle -->
+                </div>
+                <!-- Page Heading -->
                 <div class="flex flex-col md:flex-row md:items-end justify-between gap-space-md pt-space-xs">
                     <div>
                         <span class="font-label-sm text-label-sm uppercase tracking-wider text-secondary font-bold flex items-center gap-1.5 mb-1">
                             <span class="w-2 h-2 rounded-full bg-secondary"></span> Tạo nguồn thu thụ động an toàn
                         </span>
                         <h1 class="font-headline-lg text-headline-lg text-on-surface tracking-tight">Đăng tài sản cho thuê</h1>
-                        <p class="font-body-md text-body-md text-on-surface-variant max-w-2xl mt-1">
-                            Biến các món đồ ít dùng thành thu nhập thụ động bền vững. Mọi giao dịch được bảo chứng tiền cọc và rủi ro độc lập bởi RentShare Escrow.
+                        <p class="font-body-md text-body-lg text-on-surface-variant max-w-2xl mt-1">
+                            Cung cấp thông tin chính xác để người thuê hiểu rõ tài sản của bạn.
                         </p>
                     </div>
                     <div class="flex items-center gap-space-sm self-start md:self-auto bg-surface-container-lowest px-space-md py-2 rounded-xl shadow-sm">
@@ -33,625 +42,488 @@
                         </div>
                     </div>
                 </div>
-                <!-- Stepper / Progress Indicator -->
-                <div class="pt-space-md">
-                    <div class="grid grid-cols-2 sm:grid-cols-5 gap-2 sm:gap-3">
-                        <!-- Step 1: Active -->
-                        <div class="flex items-center gap-2 p-2 sm:p-2.5 rounded-lg bg-surface-container-highest text-on-surface transition-all">
-                            <div class="w-6 h-6 rounded-full bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold flex-shrink-0">1</div>
-                            <div class="min-w-0">
-                                <p class="font-label-sm text-label-sm truncate font-bold text-on-surface">Thông tin cơ bản</p>
-                                <p class="font-body-sm text-[11px] text-secondary font-medium hidden sm:block">Đang điền</p>
-                            </div>
-                        </div>
-                        <!-- Step 2 -->
-                        <div class="flex items-center gap-2 p-2 sm:p-2.5 rounded-lg bg-surface-container text-on-surface-variant">
-                            <div class="w-6 h-6 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-label-sm text-label-sm font-bold flex-shrink-0">2</div>
-                            <div class="min-w-0">
-                                <p class="font-label-sm text-label-sm truncate font-medium">Ảnh &amp; Tình trạng</p>
-                                <p class="font-body-sm text-[11px] text-on-surface-variant hidden sm:block">4 ảnh đã tải</p>
-                            </div>
-                        </div>
-                        <!-- Step 3 -->
-                        <div class="flex items-center gap-2 p-2 sm:p-2.5 rounded-lg bg-surface-container text-on-surface-variant">
-                            <div class="w-6 h-6 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-label-sm text-label-sm font-bold flex-shrink-0">3</div>
-                            <div class="min-w-0">
-                                <p class="font-label-sm text-label-sm truncate font-medium">Giá &amp; Tiền cọc</p>
-                                <p class="font-body-sm text-[11px] text-on-surface-variant hidden sm:block">450.000đ/ngày</p>
-                            </div>
-                        </div>
-                        <!-- Step 4 -->
-                        <div class="flex items-center gap-2 p-2 sm:p-2.5 rounded-lg bg-surface-container text-on-surface-variant">
-                            <div class="w-6 h-6 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-label-sm text-label-sm font-bold flex-shrink-0">4</div>
-                            <div class="min-w-0">
-                                <p class="font-label-sm text-label-sm truncate font-medium">Lịch &amp; Bàn giao</p>
-                                <p class="font-body-sm text-[11px] text-on-surface-variant hidden sm:block">Quận 1, TP.HCM</p>
-                            </div>
-                        </div>
-                        <!-- Step 5 -->
-                        <div class="flex items-center gap-2 p-2 sm:p-2.5 rounded-lg bg-surface-container text-on-surface-variant col-span-2 sm:col-span-1">
-                            <div class="w-6 h-6 rounded-full bg-surface-variant text-on-surface-variant flex items-center justify-center font-label-sm text-label-sm font-bold flex-shrink-0">5</div>
-                            <div class="min-w-0">
-                                <p class="font-label-sm text-label-sm truncate font-medium">Quy định &amp; Đăng</p>
-                                <p class="font-body-sm text-[11px] text-on-surface-variant hidden sm:block">Sẵn sàng</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
-        <!-- Main Content Grid -->
-        <div class="max-w-[1280px] w-full mx-auto px-margin-mobile lg:px-margin py-space-xl">
-            <div class="grid grid-cols-1 lg:grid-cols-12 gap-space-lg items-start">
-                <!-- LEFT COLUMN: MAIN INPUT FORM (8 cols) -->
-                <form class="lg:col-span-8 flex flex-col gap-space-lg" onsubmit="event.preventDefault();">
-                    <!-- SECTION 1: THÔNG TIN CƠ BẢN -->
-                    <div class="bg-surface-container-lowest p-space-md sm:p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
-                        <div class="flex items-center justify-between pb-space-xs">
-                            <div class="flex items-center gap-space-sm">
-                                <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">1</span>
-                                <div>
-                                    <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Thông tin cơ bản</h2>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Tên chuẩn xác giúp người thuê tìm thấy thiết bị nhanh hơn 40%</p>
-                                </div>
+
+        <!-- Main Content Area (Độ rộng tối đa max-w-5xl chuẩn rộng rãi toàn màn hình) -->
+        <div class="max-w-5xl w-full mx-auto px-margin-mobile lg:px-margin py-space-xl">
+            @if ($errors->any())
+            <div class="mb-5 rounded-xl border border-error/30 bg-error-container p-4 text-on-error-container">
+                <p class="mb-2 font-semibold">Vui lòng kiểm tra lại thông tin:</p>
+                <ul class="list-inside list-disc space-y-1 text-sm">
+                    @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+            @endif
+
+            <form action="{{ route('assets.store') }}" method="POST" enctype="multipart/form-data" class="flex flex-col gap-space-lg">
+                @csrf
+
+                <!-- SECTION 1: THÔNG TIN CƠ BẢN -->
+                <div class="bg-surface-container-lowest p-space-md sm:p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+                    <div class="flex items-center justify-between pb-space-xs">
+                        <div class="flex items-center gap-space-sm">
+                            <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">1</span>
+                            <div>
+                                <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Thông tin cơ bản</h2>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">Tên chuẩn xác giúp người thuê tìm thấy thiết bị nhanh hơn</p>
                             </div>
-                            <span class="font-label-sm text-label-sm text-secondary bg-surface-container-low px-2.5 py-1 rounded-full font-semibold">Bắt buộc</span>
                         </div>
-                        <!-- Title Input -->
+                        <span class="font-label-sm text-label-sm text-secondary bg-surface-container-low px-2.5 py-1 rounded-full font-semibold">Bắt buộc</span>
+                    </div>
+
+                    <!-- Title Input -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="title">
+                            Tên tài sản <span class="text-error">*</span>
+                        </label>
+                        <input class="w-full px-space-md py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-lg focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all"
+                            id="title" name="title" value="{{ old('title') }}" required maxlength="180"
+                            placeholder="Ví dụ: Máy ảnh Sony Alpha A7 IV" type="text" />
+                        @error('title') <p class="mt-1 text-sm text-error">{{ $message }}</p> @enderror
+                    </div>
+
+                    <!-- Category & Condition -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
                         <div class="flex flex-col gap-1.5">
-                            <div class="flex items-center justify-between">
-                                <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="asset-title">
-                                    Tiêu đề tài sản <span class="text-error">*</span>
-                                </label>
-                                <span class="font-body-sm text-body-sm text-on-surface-variant" id="title-counter">59/100 ký tự</span>
-                            </div>
-                            <input class="w-full px-space-md py-3 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all" id="asset-title" placeholder="Ví dụ: Máy ảnh Sony Alpha A7 Mark IV (Kèm Lens FE 24-70mm F2.8 GM)" type="text" value="Máy ảnh Sony Alpha A7 Mark IV (Kèm Lens FE 24-70mm F2.8 GM)" />
-                        </div>
-                        <!-- Category Selection -->
-                        <div class="flex flex-col gap-2">
-                            <label class="font-label-lg text-label-lg text-on-surface font-semibold">
+                            <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="category_id">
                                 Danh mục tài sản <span class="text-error">*</span>
                             </label>
-                            <div class="grid grid-cols-2 sm:grid-cols-3 gap-2">
-                                <button class="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container text-left flex items-center gap-2.5 transition-all text-on-surface" type="button">
-                                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant">two_wheeler</span>
-                                    <span class="font-label-md text-label-md">Phương tiện &amp; Xe</span>
-                                </button>
-                                <button class="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container text-left flex items-center gap-2.5 transition-all text-on-surface" type="button">
-                                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant">camping</span>
-                                    <span class="font-label-md text-label-md">Đồ cắm trại dã ngoại</span>
-                                </button>
-                                <button class="p-3 rounded-lg bg-primary text-on-primary text-left flex items-center gap-2.5 shadow-sm transition-all" type="button">
-                                    <span class="material-symbols-outlined text-[20px] text-secondary-container">photo_camera</span>
-                                    <span class="font-label-md text-label-md font-bold">Máy ảnh &amp; Số hóa</span>
-                                </button>
-                                <button class="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container text-left flex items-center gap-2.5 transition-all text-on-surface" type="button">
-                                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant">styler</span>
-                                    <span class="font-label-md text-label-md">Trang phục &amp; Sự kiện</span>
-                                </button>
-                                <button class="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container text-left flex items-center gap-2.5 transition-all text-on-surface" type="button">
-                                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant">home_repair_service</span>
-                                    <span class="font-label-md text-label-md">Cơ khí gia dụng DIY</span>
-                                </button>
-                                <button class="p-3 rounded-lg bg-surface-container-low hover:bg-surface-container text-left flex items-center gap-2.5 transition-all text-on-surface" type="button">
-                                    <span class="material-symbols-outlined text-[20px] text-on-surface-variant">sports_tennis</span>
-                                    <span class="font-label-md text-label-md">Thể thao &amp; Trekking</span>
-                                </button>
-                            </div>
+                            <select id="category_id" name="category_id" required
+                                class="w-full rounded-lg bg-surface-container-low px-4 py-3 text-on-surface outline-none focus:ring-2 focus:ring-secondary">
+                                <option value="">Chọn danh mục</option>
+                                @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" @selected(old('category_id')==$category->id)>
+                                    {{ $category->name }}
+                                </option>
+                                @endforeach
+                            </select>
+                            @error('category_id') <p class="mt-1 text-sm text-error">{{ $message }}</p> @enderror
                         </div>
-                        <!-- Brand & Model Inputs -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                            <div class="flex flex-col gap-1.5">
-                                <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="brand-name">Thương hiệu</label>
-                                <input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all" id="brand-name" placeholder="Ví dụ: Sony, Apple, Canon, DJI..." type="text" value="Sony" />
-                            </div>
-                            <div class="flex flex-col gap-1.5">
-                                <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="model-name">Model / Dòng máy</label>
-                                <input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all" id="model-name" placeholder="Ví dụ: A7 IV, Mavic 3 Pro..." type="text" value="Alpha A7 Mark IV (ILCE-7M4)" />
-                            </div>
-                        </div>
-                        <!-- Item Condition -->
-                        <div class="flex flex-col gap-2">
-                            <label class="font-label-lg text-label-lg text-on-surface font-semibold">
+
+                        <div class="flex flex-col gap-1.5">
+                            <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="condition">
                                 Tình trạng thiết bị thực tế <span class="text-error">*</span>
                             </label>
-                            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2">
-                                <div class="p-2.5 rounded-lg bg-surface-container-low text-center cursor-pointer hover:bg-surface-container transition-all">
-                                    <span class="font-label-md text-label-md text-on-surface font-semibold block">Mới 100%</span>
-                                    <span class="font-body-sm text-[11px] text-on-surface-variant block mt-0.5">Nguyên seal hộp</span>
-                                </div>
-                                <div class="p-2.5 rounded-lg bg-primary text-on-primary text-center cursor-pointer shadow-sm">
-                                    <span class="font-label-md text-label-md font-bold block text-secondary-container">Like New 98-99%</span>
-                                    <span class="font-body-sm text-[11px] text-inverse-on-surface block mt-0.5">Rất ít xước, hoàn hảo</span>
-                                </div>
-                                <div class="p-2.5 rounded-lg bg-surface-container-low text-center cursor-pointer hover:bg-surface-container transition-all">
-                                    <span class="font-label-md text-label-md text-on-surface font-semibold block">Rất tốt (90-95%)</span>
-                                    <span class="font-body-sm text-[11px] text-on-surface-variant block mt-0.5">Hoạt động trơn tru</span>
-                                </div>
-                                <div class="p-2.5 rounded-lg bg-surface-container-low text-center cursor-pointer hover:bg-surface-container transition-all">
-                                    <span class="font-label-md text-label-md text-on-surface font-semibold block">Tốt (80-90%)</span>
-                                    <span class="font-body-sm text-[11px] text-on-surface-variant block mt-0.5">Có hao mòn ngoại hình</span>
-                                </div>
-                            </div>
+                            <select id="condition" name="condition" required
+                                class="w-full rounded-lg bg-surface-container-low px-4 py-3 text-on-surface outline-none focus:ring-2 focus:ring-secondary">
+                                <option value="" disabled @selected(old('condition')=='' )>-- Chọn tình trạng tài sản --</option>
+                                <option value="new" @selected(old('condition')==='new' )>Mới (100%, nguyên hộp)</option>
+                                <option value="like_new" @selected(old('condition')==='like_new' )>Như mới (99%, ít sử dụng)</option>
+                                <option value="good" @selected(old('condition')==='good' )>Tốt (Hoạt động bình thường)</option>
+                                <option value="fair" @selected(old('condition')==='fair' )>Đã qua sử dụng (Có trầy xước nhẹ)</option>
+                            </select>
+                            @error('condition') <p class="mt-1 text-sm text-error">{{ $message }}</p> @enderror
                         </div>
-                        <!-- Detailed Description & Accessories -->
+                    </div>
+
+                    <!-- Brand & Model Inputs -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
                         <div class="flex flex-col gap-1.5">
-                            <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="asset-desc">
-                                Mô tả chi tiết &amp; Danh sách phụ kiện kèm theo <span class="text-error">*</span>
-                            </label>
-                            <textarea class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all leading-relaxed" id="asset-desc" placeholder="Ghi rõ chức năng, mục đích quay chụp/du lịch, danh mục phụ kiện gồm: số lượng pin, dock sạc, thẻ nhớ, túi xách..." rows="4">Body Sony A7 IV quay chụp thương mại hoàn hảo, sensor sạch không bụi mốc. Đi kèm Lens cao cấp Sony FE 24-70mm F2.8 GM kính trong veo.
-Phụ kiện kèm theo đầy đủ khi bàn giao:
-- 02 pin Sony FZ100 chính hãng (dung lượng 100%)
-- 01 dock sạc đôi Nitecore Type-C
-- 01 Thẻ nhớ 128GB Sony Tough V60 đọc ghi nhanh
-- Túi đeo chống sốc Peak Design Everyday Sling 6L.</textarea>
+                            <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="brand">Thương hiệu</label>
+                            <input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-lg focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all"
+                                id="brand" name="brand" value="{{ old('brand') }}" maxlength="120" placeholder="Ví dụ: Sony, Canon, Apple" type="text" />
                         </div>
-                    </div>
-                    <!-- SECTION 2: HÌNH ẢNH SẢN PHẨM -->
-                    <div class="bg-surface-container-lowest p-space-md sm:p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
-                        <div class="flex items-center justify-between pb-space-xs">
-                            <div class="flex items-center gap-space-sm">
-                                <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">2</span>
-                                <div>
-                                    <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Hình ảnh &amp; Tình trạng thực tế</h2>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Tối thiểu 3 ảnh sắc nét, khuyến khích chụp rõ 4 góc để làm biên bản đối soát bảo chứng</p>
-                                </div>
-                            </div>
-                            <span class="font-label-sm text-label-sm text-on-surface font-semibold bg-surface-container-highest px-3 py-1 rounded-full">4 / 8 ảnh</span>
-                        </div>
-                        <!-- Drag and Drop Zone -->
-                        <div class="p-space-lg rounded-xl bg-surface-container-low flex flex-col items-center justify-center text-center cursor-pointer hover:bg-surface-container transition-colors group">
-                            <div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center text-secondary shadow-sm mb-2 group-hover:scale-110 transition-transform">
-                                <span class="material-symbols-outlined text-[28px]">add_photo_alternate</span>
-                            </div>
-                            <p class="font-label-lg text-label-lg text-on-surface font-semibold">Kéo &amp; thả ảnh vào đây hoặc <span class="text-secondary underline">chọn từ thiết bị</span></p>
-                            <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Định dạng JPG, PNG, HEIC dung lượng tối đa 15MB/ảnh</p>
-                        </div>
-                        <!-- Uploaded Photos Grid -->
-                        <div class="grid grid-cols-2 sm:grid-cols-4 gap-3">
-                            <!-- Cover Photo (Image 1) -->
-                            <div class="relative rounded-xl overflow-hidden shadow-sm aspect-square group">
-                                <img class="w-full h-full object-cover" data-alt="Professional studio photo of Sony Alpha 7 IV mirrorless camera mounted with a 24-70mm GM lens sitting on a minimal slate podium, clean studio lighting with soft teal and warm neutral highlights, crisp commercial product shot" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBnBMASfbtkXWSWZ7s9xqBfwYw6RLrk2qDOkXV8FFmx-6YYFYqsrRNA6yJOzOg3U7x4WEdylRru3KVDY3VIVUDIebzVkJjAAtfDe9XrBoAsNlnpms7-PhzjwgQha6B6aZwOm3tYmTI86Ugys5nXXON-9Yk4JJlyAozsmTTnfLAEGIggKoTKeRYzieIXw6WKPTSrgqW6itHj_i4F95WkOKjGtlSm9jLWeczRMedld1AkfgKHzAWzT_o" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-primary/80 via-transparent to-transparent"></div>
-                                <span class="absolute top-2 left-2 bg-secondary text-on-secondary font-label-sm text-[10px] px-2 py-0.5 rounded-full font-bold shadow-sm">
-                                    Ảnh đại diện bìa
-                                </span>
-                                <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between text-on-primary">
-                                    <span class="font-label-sm text-[11px] truncate">Mặt trước thân máy</span>
-                                    <button class="w-6 h-6 rounded-full bg-inverse-surface/80 flex items-center justify-center hover:bg-error transition-colors" type="button">
-                                        <span class="material-symbols-outlined text-[14px]">delete</span>
-                                    </button>
-                                </div>
-                            </div>
-                            <!-- Detail Photo 2 (Sensor/Rear) -->
-                            <div class="relative rounded-xl overflow-hidden shadow-sm aspect-square group">
-                                <img class="w-full h-full object-cover" data-alt="Close up photography of Sony A7 IV camera LCD display turned on showing menu settings with lens glass in reflection, high detail tactile camera dials and buttons, soft ambient warm rim lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBSzkoZLsPTWnCTIxtFH8riQHZ0w2qNCGw6qJyvAPUTbswahumA98qYJfPC_DX19wOXcgIGDvqK-FjwbbVRZa3Oa_F5DuC-0MvHFXwS5mNaPPNJvb5b0xzWDFZbwP_mIgoaryyJO-8LAaoL8g3UxMQufbw0Ru04-uwp2wPIcwPbNgmSpxuIXu4OFdB-J2n_iPIH2wwuM_6qWhvqM16q3tEno1QaRwl92nnNXUmetDgUbdNgicgQzk0" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                <button class="absolute top-2 right-2 w-6 h-6 rounded-full bg-surface-container-lowest/90 text-on-surface flex items-center justify-center hover:bg-error hover:text-on-error transition-colors" type="button">
-                                    <span class="material-symbols-outlined text-[14px]">close</span>
-                                </button>
-                                <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between text-on-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <span class="font-label-sm text-[11px] truncate">Màn hình xoay lật</span>
-                                    <span class="material-symbols-outlined text-[16px]">drag_indicator</span>
-                                </div>
-                            </div>
-                            <!-- Detail Photo 3 (Accessories Kit) -->
-                            <div class="relative rounded-xl overflow-hidden shadow-sm aspect-square group">
-                                <img class="w-full h-full object-cover" data-alt="Flat lay overhead view of camera rental accessories kit including two black rectangular lithium camera batteries, dual charging dock with glowing blue led, tough memory card case, and grey sling bag on a textured concrete surface" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCid7Kn73qHPwmRmVPjc18quDbswJtn0jrsK_eTej_xXuwiM5mee7Q2gEsTJ0iR9QCh8EYS_9SmrvDa-W04ssNjgWX4qhM1dbkqSjmfnBW4BTJtt_L12MdDI2aFPjAUWOwRPXY83NEhbqvrFU9yqYLLMZBsZWKrfiMZX96vMieWezNRe5HlY0L_pvGBYZOYY817NqrfnpQlNpoTFfBHXFzBxkFtdPZ61bXR2iyh46tFUtzOICEJ_CE" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                <button class="absolute top-2 right-2 w-6 h-6 rounded-full bg-surface-container-lowest/90 text-on-surface flex items-center justify-center hover:bg-error hover:text-on-error transition-colors" type="button">
-                                    <span class="material-symbols-outlined text-[14px]">close</span>
-                                </button>
-                                <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between text-on-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <span class="font-label-sm text-[11px] truncate">2 pin + Túi đựng</span>
-                                    <span class="material-symbols-outlined text-[16px]">drag_indicator</span>
-                                </div>
-                            </div>
-                            <!-- Detail Photo 4 (Sensor check) -->
-                            <div class="relative rounded-xl overflow-hidden shadow-sm aspect-square group">
-                                <img class="w-full h-full object-cover" data-alt="Macro close-up shot of an open mirrorless full frame camera body mount showing spotless clean iridescent CMOS digital sensor, pristine condition inspection, sharp precision photography" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC08jo295FDV-E3uc2wyPhSR7TvtWwYqFyg8xYQKZPZlod8WiBlSd8stNvQgrrpA4qfArrnGx4WX8p4ZRjr9QSSxVRUtQpoYCreBpOtBtyfrJ4BnotkUoQ2pB0N5nxOZ0cdReis4ecJFiP7UGt5yWLotELObrFzT3U-6CrthhCji8aEWLMgNq1FowyERB6CAl4MVhCJE0jIK6-B3b3hfTHgbVM2EPhYEs3SeTEVU7jabMeIW7BoBtI" />
-                                <div class="absolute inset-0 bg-gradient-to-t from-primary/70 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                <button class="absolute top-2 right-2 w-6 h-6 rounded-full bg-surface-container-lowest/90 text-on-surface flex items-center justify-center hover:bg-error hover:text-on-error transition-colors" type="button">
-                                    <span class="material-symbols-outlined text-[14px]">close</span>
-                                </button>
-                                <div class="absolute bottom-2 left-2 right-2 flex items-center justify-between text-on-primary opacity-0 group-hover:opacity-100 transition-opacity">
-                                    <span class="font-label-sm text-[11px] truncate">Sensor không bụi</span>
-                                    <span class="material-symbols-outlined text-[16px]">drag_indicator</span>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="flex items-center gap-2 p-space-sm rounded-lg bg-surface-container-low text-on-surface-variant font-body-sm text-body-sm">
-                            <span class="material-symbols-outlined text-secondary text-[18px]">verified</span>
-                            <span>Ảnh chụp thực tế rõ nét giúp tài sản được gắn nhãn <strong>“Tài sản xác thực”</strong>, gia tăng gấp đôi tỷ lệ được duyệt thuê nhanh.</span>
-                        </div>
-                    </div>
-                    <!-- SECTION 3: THIẾT LẬP GIÁ THUÊ & TIỀN CỌC -->
-                    <div class="bg-surface-container-lowest p-space-md sm:p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
-                        <div class="flex items-center justify-between pb-space-xs">
-                            <div class="flex items-center gap-space-sm">
-                                <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">3</span>
-                                <div>
-                                    <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Giá thuê &amp; Ký quỹ Escrow</h2>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Minh bạch biểu phí, khách cọc an tâm qua ví trung gian RentShare</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Unit Picker -->
                         <div class="flex flex-col gap-1.5">
-                            <label class="font-label-lg text-label-lg text-on-surface font-semibold">Đơn vị thời gian tính tiền</label>
-                            <div class="inline-flex p-1 rounded-lg bg-surface-container-low w-fit">
-                                <button class="px-space-md py-1.5 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-on-surface" type="button">Theo giờ</button>
-                                <button class="px-space-md py-1.5 rounded-md font-label-md text-label-md bg-surface-container-lowest text-on-surface font-bold shadow-sm" type="button">Theo ngày (Mặc định)</button>
-                                <button class="px-space-md py-1.5 rounded-md font-label-md text-label-md text-on-surface-variant hover:text-on-surface" type="button">Theo tuần</button>
-                            </div>
-                        </div>
-                        <!-- Daily Rental Rate Input -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                            <div class="flex flex-col gap-1.5">
-                                <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="price-per-day">
-                                    Giá thuê 1 ngày (VNĐ) <span class="text-error">*</span>
-                                </label>
-                                <div class="relative flex items-center">
-                                    <input class="w-full px-space-md py-3 rounded-lg bg-surface-container-low text-on-surface font-headline-sm text-headline-sm font-bold focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all pr-14" id="price-per-day" type="text" value="450.000" />
-                                    <span class="absolute right-4 font-label-lg text-label-lg text-on-surface-variant font-bold">đ/ngày</span>
-                                </div>
-                                <span class="font-body-sm text-[12px] text-secondary font-medium">Gợi ý phân khúc: 420.000đ - 500.000đ/ngày</span>
-                            </div>
-                            <!-- Escrow Deposit Amount -->
-                            <div class="flex flex-col gap-1.5">
-                                <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="escrow-deposit">
-                                    Tiền đặt cọc bảo chứng tiêu chuẩn (VNĐ) <span class="text-error">*</span>
-                                </label>
-                                <div class="relative flex items-center">
-                                    <input class="w-full px-space-md py-3 rounded-lg bg-surface-container-low text-on-surface font-headline-sm text-headline-sm font-bold focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all pr-12" id="escrow-deposit" type="text" value="3.000.000" />
-                                    <span class="absolute right-4 font-label-lg text-label-lg text-on-surface-variant font-bold">đ</span>
-                                </div>
-                                <span class="font-body-sm text-[12px] text-on-surface-variant">Khóa tạm thời tại Escrow khi khách nhận máy</span>
-                            </div>
-                        </div>
-                        <!-- Long Term Discount Toggles -->
-                        <div class="p-space-md rounded-xl bg-surface-container-low flex flex-col gap-space-sm">
-                            <span class="font-label-lg text-label-lg text-on-surface font-semibold">Chiết khấu ưu đãi cho khách thuê dài hạn</span>
-                            <div class="flex items-center justify-between py-1">
-                                <div class="flex flex-col">
-                                    <span class="font-label-md text-label-md text-on-surface font-medium">Giảm 10% khi thuê từ 3 ngày trở lên</span>
-                                    <span class="font-body-sm text-[12px] text-on-surface-variant">Chỉ còn 405.000đ/ngày (Giúp tăng tỷ lệ lấp lịch trống 65%)</span>
-                                </div>
-                                <!-- Custom Active Switch -->
-                                <button class="w-12 h-6 rounded-full bg-secondary p-0.5 flex items-center justify-end transition-colors" type="button">
-                                    <div class="w-5 h-5 rounded-full bg-on-secondary shadow-sm"></div>
-                                </button>
-                            </div>
-                            <div class="flex items-center justify-between py-1">
-                                <div class="flex flex-col">
-                                    <span class="font-label-md text-label-md text-on-surface font-medium">Giảm 20% khi thuê trọn gói từ 7 ngày</span>
-                                    <span class="font-body-sm text-[12px] text-on-surface-variant">Chỉ còn 360.000đ/ngày cho khách đi dự án xa hoặc du lịch dài ngày</span>
-                                </div>
-                                <!-- Custom Active Switch -->
-                                <button class="w-12 h-6 rounded-full bg-secondary p-0.5 flex items-center justify-end transition-colors" type="button">
-                                    <div class="w-5 h-5 rounded-full bg-on-secondary shadow-sm"></div>
-                                </button>
-                            </div>
-                        </div>
-                        <!-- Collateral Flexibility Option -->
-                        <div class="flex flex-col gap-2">
-                            <span class="font-label-lg text-label-lg text-on-surface font-semibold">Hình thức đặt cọc linh hoạt cho người thuê</span>
-                            <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-sm">
-                                <label class="p-space-sm rounded-lg bg-surface-container-high flex items-start gap-2.5 cursor-pointer">
-                                    <input checked="" class="mt-1 text-secondary focus:ring-0" name="collateral-mode" type="radio" />
-                                    <div class="flex flex-col">
-                                        <span class="font-label-md text-label-md text-on-surface font-bold">100% Ký quỹ tiền mặt Escrow</span>
-                                        <span class="font-body-sm text-[12px] text-on-surface-variant">Khách thanh toán 3.000.000đ vào ví ký quỹ RentShare trước bàn giao.</span>
-                                    </div>
-                                </label>
-                                <label class="p-space-sm rounded-lg bg-surface-container-low flex items-start gap-2.5 cursor-pointer hover:bg-surface-container">
-                                    <input class="mt-1 text-secondary focus:ring-0" name="collateral-mode" type="radio" />
-                                    <div class="flex flex-col">
-                                        <span class="font-label-md text-label-md text-on-surface font-bold">Giữ CCCD gắn chip + Cọc 500.000đ</span>
-                                        <span class="font-body-sm text-[12px] text-on-surface-variant">Chỉ áp dụng cho người thuê có điểm Uy tín ≥ 90 và eKYC Cấp 2.</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
-                        <!-- RentShare Care Protection Checkbox -->
-                        <div class="p-space-md rounded-xl bg-secondary-container/30 flex items-start gap-3">
-                            <input checked="" class="mt-1 w-4 h-4 rounded text-secondary focus:ring-0" id="escrow-care" type="checkbox" />
-                            <div class="flex flex-col">
-                                <label class="font-label-md text-label-md text-on-secondary-container font-bold cursor-pointer" for="escrow-care">
-                                    Bật gói Bảo hiểm tài sản RentShare Care (Khuyên dùng)
-                                </label>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant mt-0.5">
-                                    Bảo hiểm rơi vỡ, chập cháy, hư hại linh kiện tự động đền bù tới <strong>50.000.000đ</strong>. Phí dịch vụ sàn chỉ 5% được trừ khi bạn nhận tiền hoàn tất đơn thuê.
-                                </p>
-                            </div>
+                            <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="model">Model / Dòng máy</label>
+                            <input class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-lg focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all"
+                                id="model" name="model" value="{{ old('model') }}" maxlength="160" placeholder="Ví dụ: Alpha A7 IV" type="text" />
                         </div>
                     </div>
-                    <!-- SECTION 4: LỊCH TRỐNG & ĐỊA ĐIỂM BÀN GIAO -->
-                    <div class="bg-surface-container-lowest p-space-md sm:p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
-                        <div class="flex items-center justify-between pb-space-xs">
-                            <div class="flex items-center gap-space-sm">
-                                <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">4</span>
-                                <div>
-                                    <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Lịch rảnh &amp; Địa điểm bàn giao</h2>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Chủ động thiết lập thời gian cho thuê và khu vực nhận máy thuận tiện</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Rental limits -->
-                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
-                            <div class="flex flex-col gap-1.5">
-                                <label class="font-label-lg text-label-lg text-on-surface font-semibold">Thời gian thuê tối thiểu</label>
-                                <div class="p-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md flex items-center justify-between">
-                                    <span>01 Ngày (24 giờ)</span>
-                                    <span class="material-symbols-outlined text-[18px] text-on-surface-variant">schedule</span>
-                                </div>
-                            </div>
-                            <div class="flex flex-col gap-1.5">
-                                <label class="font-label-lg text-label-lg text-on-surface font-semibold">Thời gian thuê tối đa</label>
-                                <div class="p-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md flex items-center justify-between">
-                                    <span>14 Ngày (Có thể gia hạn)</span>
-                                    <span class="material-symbols-outlined text-[18px] text-on-surface-variant">event_repeat</span>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Interactive Calendar UI Simulation -->
-                        <div class="flex flex-col gap-2">
-                            <div class="flex items-center justify-between">
-                                <label class="font-label-lg text-label-lg text-on-surface font-semibold">Lịch khả dụng (Tháng 11 &amp; Tháng 12, 2025)</label>
-                                <div class="flex items-center gap-3 font-label-sm text-label-sm">
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="w-3 h-3 rounded-sm bg-secondary-fixed"></span>
-                                        <span class="text-on-surface">Lịch rảnh</span>
-                                    </div>
-                                    <div class="flex items-center gap-1.5">
-                                        <span class="w-3 h-3 rounded-sm bg-surface-container-high"></span>
-                                        <span class="text-on-surface-variant">Khóa lịch</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <!-- Mini Calendar Widget -->
-                            <div class="p-space-md rounded-xl bg-surface-container-low flex flex-col gap-2">
-                                <div class="grid grid-cols-7 text-center font-label-sm text-label-sm text-on-surface-variant py-1">
-                                    <span>T2</span><span>T3</span><span>T4</span><span>T5</span><span>T6</span><span>T7</span><span>CN</span>
-                                </div>
-                                <div class="grid grid-cols-7 gap-1.5 text-center font-body-sm text-body-sm font-semibold">
-                                    <!-- Row 1 -->
-                                    <div class="py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-secondary-fixed/50 cursor-pointer">10</div>
-                                    <div class="py-2 rounded-lg bg-surface-container-lowest text-on-surface hover:bg-secondary-fixed/50 cursor-pointer">11</div>
-                                    <div class="py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold shadow-xs cursor-pointer">12</div>
-                                    <div class="py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold shadow-xs cursor-pointer">13</div>
-                                    <div class="py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold shadow-xs cursor-pointer">14</div>
-                                    <div class="py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold shadow-xs cursor-pointer">15</div>
-                                    <div class="py-2 rounded-lg bg-surface-container-high text-on-surface-variant/70 cursor-not-allowed">16</div>
-                                    <!-- Row 2 -->
-                                    <div class="py-2 rounded-lg bg-surface-container-high text-on-surface-variant/70 cursor-not-allowed">17</div>
-                                    <div class="py-2 rounded-lg bg-surface-container-high text-on-surface-variant/70 cursor-not-allowed">18</div>
-                                    <div class="py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold shadow-xs cursor-pointer">19</div>
-                                    <div class="py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold shadow-xs cursor-pointer">20</div>
-                                    <div class="py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold shadow-xs cursor-pointer">21</div>
-                                    <div class="py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold shadow-xs cursor-pointer">22</div>
-                                    <div class="py-2 rounded-lg bg-secondary-fixed text-on-secondary-fixed font-bold shadow-xs cursor-pointer">23</div>
-                                </div>
-                                <p class="font-body-sm text-[12px] text-on-surface-variant mt-1 text-center">
-                                    Nhấp vào từng ngày để bật/tắt lịch rảnh của bạn. Ngày 16-18 đã được khóa bận cá nhân.
-                                </p>
-                            </div>
-                        </div>
-                        <!-- Pickup Address -->
-                        <div class="flex flex-col gap-1.5">
-                            <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="pickup-address">
-                                Địa chỉ xem và nhận tài sản <span class="text-error">*</span>
-                            </label>
-                            <div class="relative flex items-center">
-                                <span class="material-symbols-outlined absolute left-3 text-secondary text-[20px]">location_on</span>
-                                <input class="w-full pl-10 pr-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all" id="pickup-address" type="text" value="45 Lê Duẩn, Phường Bến Nghé, Quận 1, TP. Hồ Chí Minh" />
-                            </div>
-                        </div>
-                        <!-- Delivery Options -->
-                        <div class="flex flex-col gap-2">
-                            <span class="font-label-lg text-label-lg text-on-surface font-semibold">Phương thức bàn giao khả dụng</span>
-                            <div class="flex flex-col gap-2">
-                                <label class="p-3 rounded-lg bg-surface-container-low flex items-center gap-3 cursor-pointer">
-                                    <input checked="" class="w-4 h-4 rounded text-secondary focus:ring-0" type="checkbox" />
-                                    <div class="flex flex-col">
-                                        <span class="font-label-md text-label-md text-on-surface font-semibold">Gặp trực tiếp đối chiếu CCCD &amp; Ký biên bản bàn giao số</span>
-                                        <span class="font-body-sm text-[12px] text-on-surface-variant">Khuyên dùng để kiểm tra thực tế máy và phụ kiện trước khi nhận.</span>
-                                    </div>
-                                </label>
-                                <label class="p-3 rounded-lg bg-surface-container-low flex items-center gap-3 cursor-pointer">
-                                    <input checked="" class="w-4 h-4 rounded text-secondary focus:ring-0" type="checkbox" />
-                                    <div class="flex flex-col">
-                                        <span class="font-label-md text-label-md text-on-surface font-semibold">Hỗ trợ giao hàng hỏa tốc (Ahamove / GrabExpress nội thành)</span>
-                                        <span class="font-body-sm text-[12px] text-on-surface-variant">Khách tự chi trả phí ship, tài xế quay video đồng kiểm niêm phong RentShare.</span>
-                                    </div>
-                                </label>
-                            </div>
-                        </div>
+
+                    <!-- Detailed Description -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="description">
+                            Mô tả chi tiết <span class="text-error">*</span>
+                        </label>
+                        <textarea class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-lg focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all leading-relaxed"
+                            id="description" name="description" rows="6" required minlength="20" maxlength="10000"
+                            placeholder="Gợi ý nội dung mô tả:
+- Tình trạng thực tế (ngoại hình, số lần sử dụng...)
+- Các tính năng nổi bật hoặc thông số kỹ thuật chính
+- Phụ kiện đi kèm (nếu có)
+- Lưu ý hoặc quy định riêng khi sử dụng tài sản này..."></textarea>
+                        @error('description') <p class="mt-1 text-sm text-error">{{ $message }}</p> @enderror
+                        <button type="button" id="btn-sample-desc" class="cursor-pointer text-sm text-secondary hover:underline self-start">
+                            ✨ Chèn mẫu mô tả nhanh
+                        </button>
                     </div>
-                    <!-- SECTION 5: QUY ĐỊNH THUÊ & HỦY ĐƠN -->
-                    <div class="bg-surface-container-lowest p-space-md sm:p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
-                        <div class="flex items-center justify-between pb-space-xs">
-                            <div class="flex items-center gap-space-sm">
-                                <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">5</span>
-                                <div>
-                                    <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Quy định thuê đồ &amp; Chính sách hủy</h2>
-                                    <p class="font-body-sm text-body-sm text-on-surface-variant">Rõ ràng ngay từ đầu giúp giao dịch minh bạch, tránh tranh chấp phát sinh</p>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Usage Rules -->
-                        <div class="flex flex-col gap-1.5">
-                            <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="rules-input">Quy định sử dụng tài sản</label>
-                            <textarea class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-md focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all leading-relaxed" id="rules-input" rows="3">- Tuyệt đối không quay chụp dưới mưa hoặc môi trường cát biển mặn mà không có bao chống nước chuyên dụng.
-- Không tự ý tháo mở lens ở môi trường nhiều gió bụi bẩn để bảo vệ cảm biến full-frame.
-- Hoàn trả thiết bị đúng giờ đã hẹn. Phạt 100.000đ/giờ nếu trễ hẹn không báo trước 3 tiếng.</textarea>
-                        </div>
-                        <!-- Cancellation Policy -->
-                        <div class="flex flex-col gap-2">
-                            <label class="font-label-lg text-label-lg text-on-surface font-semibold">Chính sách hủy đơn của bạn</label>
-                            <div class="p-space-md rounded-xl bg-surface-container-low flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
-                                <div class="flex items-start gap-3">
-                                    <span class="material-symbols-outlined text-secondary text-[24px] mt-0.5">published_with_changes</span>
-                                    <div class="flex flex-col">
-                                        <span class="font-label-md text-label-md text-on-surface font-bold">Chính sách Linh hoạt (Khuyên dùng)</span>
-                                        <span class="font-body-sm text-[12px] text-on-surface-variant">
-                                            Người thuê được hủy miễn phí trước giờ nhận đồ 24h. Hủy sau 24h đền bù 50% tiền thuê ngày đầu cho chủ máy.
-                                        </span>
-                                    </div>
-                                </div>
-                                <button class="px-space-md py-2 rounded-lg bg-surface-container-lowest text-on-surface font-label-sm text-label-sm font-semibold hover:bg-surface-container-high transition-colors whitespace-nowrap self-start sm:self-auto shadow-xs" type="button">
-                                    Thay đổi
-                                </button>
-                            </div>
-                        </div>
-                        <!-- Agreement Note -->
-                        <div class="flex items-start gap-3 pt-space-xs">
-                            <input checked="" class="mt-1 w-4 h-4 rounded text-secondary focus:ring-0" id="terms-agree" type="checkbox" />
-                            <label class="font-body-sm text-body-sm text-on-surface-variant" for="terms-agree">
-                                Tôi cam kết là chủ sở hữu hợp pháp hoặc có toàn quyền ủy thác cho thuê tài sản này. Tôi đã đọc và đồng ý với
-                                <a class="text-secondary font-semibold hover:underline" href="#">Quy chế hoạt động Escrow</a> và <a class="text-secondary font-semibold hover:underline" href="#">Chính sách bồi thường tài sản RentShare</a>.
-                            </label>
-                        </div>
+
+                    <!-- Accessories -->
+                    <div class="flex flex-col gap-1.5">
+                        <label class="font-label-lg text-label-lg text-on-surface font-semibold" for="accessories">Phụ kiện đi kèm</label>
+                        <textarea class="w-full px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-body-md text-body-lg focus:bg-surface-container-lowest focus:shadow-[0_0_0_2px_#006a61] outline-none transition-all"
+                            id="accessories" name="accessories" rows="3" placeholder="Liệt kê phụ kiện, số lượng, tình trạng...">{{ old('accessories') }}</textarea>
                     </div>
-                    <!-- ACTION FOOTER BAR -->
-                    <div class="sticky bottom-4 z-30 p-space-md rounded-xl bg-surface-container-lowest shadow-[0_10px_25px_-5px_rgba(15,23,42,0.15)] flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+                </div>
+
+                <!-- SECTION 2: GIÁ THUÊ & ĐỊA ĐIỂM -->
+                <div class="bg-surface-container-lowest p-space-md sm:p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+                    <div class="flex items-center justify-between pb-space-xs">
                         <div class="flex items-center gap-space-sm">
-                            <button class="px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface-variant font-label-lg text-label-lg hover:bg-surface-container hover:text-on-surface transition-colors" type="button">
-                                Hủy bỏ
-                            </button>
-                            <button class="px-space-md py-2.5 rounded-lg bg-surface-container-low text-on-surface font-label-lg text-label-lg hover:bg-surface-container transition-colors flex items-center gap-1.5" type="button">
-                                <span class="material-symbols-outlined text-[18px]">bookmark</span>
-                                <span>Lưu bản nháp</span>
-                            </button>
+                            <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">2</span>
+                            <div>
+                                <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Giá thuê và địa điểm</h2>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">Minh bạch giá và khu vực nhận máy thuận tiện</p>
+                            </div>
                         </div>
+                        <span class="font-label-sm text-label-sm text-secondary bg-surface-container-low px-2.5 py-1 rounded-full font-semibold">Bắt buộc</span>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+                        <div>
+                            <label for="price_per_day" class="mb-2 block font-semibold">Giá thuê mỗi ngày (VNĐ) <span class="text-error">*</span></label>
+                            <input id="price_per_day" name="price_per_day" type="number" min="1000" step="1000"
+                                value="{{ old('price_per_day') }}" required
+                                class="w-full rounded-lg bg-surface-container-low px-4 py-3 outline-none focus:ring-2 focus:ring-secondary">
+                            @error('price_per_day') <p class="mt-1 text-sm text-error">{{ $message }}</p> @enderror
+                        </div>
+                        <div>
+                            <label for="deposit" class="mb-2 block font-semibold">Tiền đặt cọc (VNĐ)</label>
+                            <input id="deposit" name="deposit" type="number" min="0" step="1000"
+                                value="{{ old('deposit', 0) }}"
+                                class="w-full rounded-lg bg-surface-container-low px-4 py-3 outline-none focus:ring-2 focus:ring-secondary">
+                            @error('deposit') <p class="mt-1 text-sm text-error">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+
+                    <!-- Chọn Tỉnh / Thành phố và Quận / Huyện -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-space-md">
+                        <div>
+                            <label for="city_select" class="mb-2 block font-semibold">Tỉnh / Thành phố <span class="text-error">*</span></label>
+                            <select id="city_select" required
+                                class="w-full rounded-lg bg-surface-container-low px-4 py-3 text-on-surface outline-none focus:ring-2 focus:ring-secondary">
+                                <option value="">-- Chọn Tỉnh / Thành phố --</option>
+                            </select>
+                            <input type="hidden" id="city" name="city" value="{{ old('city') }}">
+                            @error('city') <p class="mt-1 text-sm text-error">{{ $message }}</p> @enderror
+                        </div>
+
+                        <div>
+                            <label for="district_select" class="mb-2 block font-semibold">Quận / Huyện <span class="text-error">*</span></label>
+                            <select id="district_select" disabled required
+                                class="w-full rounded-lg bg-surface-container-low px-4 py-3 text-on-surface outline-none focus:ring-2 focus:ring-secondary disabled:opacity-50">
+                                <option value="">-- Chọn Quận / Huyện --</option>
+                            </select>
+                            <input type="hidden" id="district" name="district" value="{{ old('district') }}">
+                            @error('district') <p class="mt-1 text-sm text-error">{{ $message }}</p> @enderror
+                        </div>
+                    </div>
+
+                    <div>
+                        <label for="pickup_address" class="mb-2 block font-semibold">Địa chỉ chi tiết (Số nhà, đường, phường/xã) <span class="text-error">*</span></label>
+                        <input id="pickup_address" name="pickup_address" value="{{ old('pickup_address') }}" required maxlength="255"
+                            class="w-full rounded-lg bg-surface-container-low px-4 py-3 outline-none focus:ring-2 focus:ring-secondary"
+                            placeholder="Ví dụ: 123 Đường Nguyễn Huệ, Phường Bến Nghé">
+                        @error('pickup_address') <p class="mt-1 text-sm text-error">{{ $message }}</p> @enderror
+                    </div>
+
+                    <div>
+                        <label for="rental_rules" class="mb-2 block font-semibold">Quy định sử dụng</label>
+                        <textarea id="rental_rules" name="rental_rules" rows="3"
+                            class="w-full rounded-lg bg-surface-container-low px-4 py-3 outline-none focus:ring-2 focus:ring-secondary"
+                            placeholder="Các quy định người thuê cần tuân thủ...">{{ old('rental_rules') }}</textarea>
+                    </div>
+                </div>
+
+                <!-- SECTION 3: HÌNH ẢNH SẢN PHẨM -->
+                <div class="bg-surface-container-lowest p-space-md sm:p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+                    <div class="flex items-center justify-between pb-space-xs">
                         <div class="flex items-center gap-space-sm">
-                            <button class="px-space-md py-2.5 rounded-lg bg-surface-container-high text-on-surface font-label-lg text-label-lg hover:bg-surface-container-highest transition-colors flex items-center gap-1.5" type="button">
-                                <span class="material-symbols-outlined text-[18px]">visibility</span>
-                                <span>Xem trước</span>
-                            </button>
-                            <button class="px-space-lg py-2.5 rounded-lg bg-primary text-on-primary font-label-lg text-label-lg hover:bg-primary-container hover:text-on-primary-container transition-all shadow-md flex items-center gap-2" type="button">
-                                <span class="material-symbols-outlined text-[18px] text-secondary-container">rocket_launch</span>
-                                <span class="font-bold">Đăng tài sản ngay</span>
-                            </button>
+                            <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">3</span>
+                            <div>
+                                <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Hình ảnh tài sản</h2>
+                                <p class="font-body-sm text-body-sm text-on-surface-variant">Tải từ 1 đến 10 ảnh. Định dạng JPG, PNG hoặc WebP; tối đa 5MB mỗi ảnh. Ảnh đầu tiên sẽ là ảnh đại diện.</p>
+                            </div>
                         </div>
+                        <span class="font-label-sm text-label-sm text-secondary bg-surface-container-low px-2.5 py-1 rounded-full font-semibold">Bắt buộc</span>
                     </div>
-                </form>
-                <!-- RIGHT COLUMN: STICKY CONTEXTUAL SIDEBAR (4 cols) -->
-                <aside class="lg:col-span-4 flex flex-col gap-space-lg lg:sticky lg:top-24">
-                    <!-- CARD 1: LIVE LISTING CARD PREVIEW -->
-                    <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-md flex flex-col gap-space-md">
-                        <div class="flex items-center justify-between">
-                            <div class="flex items-center gap-1.5">
-                                <span class="w-2.5 h-2.5 rounded-full bg-secondary animate-pulse"></span>
-                                <span class="font-label-lg text-label-lg text-on-surface font-bold">Xem trước thẻ hiển thị</span>
-                            </div>
-                            <span class="font-label-sm text-label-sm text-secondary bg-surface-container-highest px-2 py-0.5 rounded-full font-semibold">Live Preview</span>
+
+                    <!-- Khu vực kéo thả / chọn file -->
+                    <label id="drop-zone" for="images" class="p-space-lg rounded-xl bg-surface-container-low flex flex-col items-center justify-center text-center cursor-pointer hover:bg-surface-container transition-colors group border-2 border-dashed border-secondary/50">
+                        <div class="w-12 h-12 rounded-full bg-surface-container-lowest flex items-center justify-center text-secondary shadow-sm mb-2 group-hover:scale-110 transition-transform">
+                            <span class="material-symbols-outlined text-[28px]">add_photo_alternate</span>
                         </div>
-                        <!-- The Real Simulated Listing Card -->
-                        <div class="rounded-xl overflow-hidden bg-surface-container-lowest shadow-sm flex flex-col group">
-                            <!-- 4:3 Image Preview with Badges -->
-                            <div class="relative w-full aspect-[4/3] overflow-hidden bg-surface-container">
-                                <img class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300" data-alt="Sony Alpha A7 Mark IV camera with high end zoom lens centered in aesthetic minimalist lighting, pristine gear preview for peer to peer rental marketplace" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD__LhuPJ8mV96gqPnlSkn6h3prFUzyEWqGXcZVMFRwNqE62WzpEejUfWMDKOZN71H8JZtvt79YnNecVVxRSFjwp5S6qha-pya9afpiZTktGoTvYL61XdUzcDDYrqZORO7ULOLruUUD2F2ynXO4av8oBLWi7jOtxWEEESElu05d4dyhJuGwVP3_4o4QWiY8HkQO5Ljd8m1yH_XKF1qpP-kaYLH3dqPOgul2KvAozcqNwqMuEDXhtdw" />
-                                <div class="absolute top-2.5 left-2.5 flex items-center gap-1.5">
-                                    <span class="bg-surface/90 backdrop-blur-md px-2 py-0.5 rounded-md font-label-sm text-[11px] font-bold text-on-surface flex items-center gap-1 shadow-xs">
-                                        <span class="material-symbols-outlined text-[14px] text-secondary">verified</span> Xác thực
-                                    </span>
-                                    <span class="bg-secondary-fixed text-on-secondary-fixed-variant px-2 py-0.5 rounded-md font-label-sm text-[11px] font-bold shadow-xs">
-                                        Like New 99%
-                                    </span>
-                                </div>
-                                <button aria-label="Yêu thích" class="absolute top-2.5 right-2.5 w-8 h-8 rounded-full bg-surface/80 backdrop-blur-md text-on-surface flex items-center justify-center hover:bg-surface transition-colors shadow-xs" type="button">
-                                    <span class="material-symbols-outlined text-[18px]">favorite</span>
-                                </button>
-                            </div>
-                            <!-- Card Content -->
-                            <div class="p-space-md flex flex-col gap-space-xs">
-                                <!-- Location & Rating -->
-                                <div class="flex items-center justify-between font-label-sm text-label-sm text-on-surface-variant">
-                                    <span class="flex items-center gap-1 truncate max-w-[160px]">
-                                        <span class="material-symbols-outlined text-[15px] text-secondary">location_on</span>
-                                        Q.1, TP. Hồ Chí Minh
-                                    </span>
-                                    <span class="flex items-center gap-1 font-bold text-on-surface">
-                                        <span class="material-symbols-outlined text-[15px] text-amber-500" style="font-variation-settings: 'FILL' 1;">star</span>
-                                        5.0 <span class="text-on-surface-variant font-normal">(Mới)</span>
-                                    </span>
-                                </div>
-                                <!-- Title -->
-                                <h3 class="font-headline-sm text-headline-sm text-on-surface font-bold line-clamp-2 leading-snug">
-                                    Máy ảnh Sony Alpha A7 Mark IV (Kèm Lens FE 24-70mm F2.8 GM)
-                                </h3>
-                                <!-- Price & Escrow row -->
-                                <div class="pt-2 flex items-baseline justify-between">
-                                    <div>
-                                        <span class="font-headline-md text-headline-md text-primary font-bold">450.000 đ</span>
-                                        <span class="font-body-sm text-[12px] text-on-surface-variant">/ngày</span>
-                                    </div>
-                                    <div class="text-right">
-                                        <span class="font-label-sm text-[11px] text-on-surface-variant block">Ký quỹ Escrow</span>
-                                        <span class="font-label-sm text-label-sm text-secondary font-bold">3.000.000 đ</span>
-                                    </div>
-                                </div>
-                                <!-- Owner footer strip -->
-                                <div class="mt-2 pt-2 bg-surface-container-low p-2 rounded-lg flex items-center justify-between">
-                                    <div class="flex items-center gap-2">
-                                        <div class="w-7 h-7 rounded-full bg-primary flex items-center justify-center text-on-primary font-label-sm text-[11px] font-bold">
-                                            MT
-                                        </div>
-                                        <span class="font-label-sm text-label-sm text-on-surface font-semibold">Nguyễn Minh Tuấn</span>
-                                    </div>
-                                    <div class="flex items-center gap-1 font-label-sm text-[11px] text-secondary bg-surface-container-lowest px-2 py-0.5 rounded-full font-bold shadow-xs">
-                                        <span class="material-symbols-outlined text-[13px]">shield</span>
-                                        98/100
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <p class="font-label-lg text-label-lg text-on-surface font-semibold">Nhấn để chọn ảnh hoặc kéo thả vào đây</p>
+                        <p class="font-body-sm text-body-sm text-on-surface-variant mt-1">Hỗ trợ JPG, PNG, WebP (Tối đa 5MB mỗi ảnh)</p>
+                        <input id="images" name="images[]" type="file" accept=".jpg,.jpeg,.png,.webp" multiple class="hidden">
+                    </label>
+
+                    <!-- Thông báo lỗi dung lượng / thiếu ảnh -->
+                    <div id="file-error-msg" class="text-sm text-error hidden font-medium"></div>
+
+                    <!-- Khu vực hiển thị danh sách ảnh thu nhỏ (Thumbnail Preview) -->
+                    <div id="image-preview-container" class="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-5 gap-3 pt-2"></div>
+
+                    @error('images') <p class="text-sm text-error">{{ $message }}</p> @enderror
+                    @error('images.*') <p class="text-sm text-error">{{ $message }}</p> @enderror
+                </div>
+
+                <!-- SECTION 4: ĐIỀU KHOẢN & SUBMIT -->
+                <div class="bg-surface-container-lowest p-space-md sm:p-space-lg rounded-xl shadow-sm flex flex-col gap-space-md">
+                    <label for="terms_accepted" class="flex items-start gap-3 rounded-lg bg-surface-container-low p-4 text-sm select-none cursor-pointer">
+                        <input type="checkbox" id="terms_accepted" name="terms_accepted" value="1" required @checked(old('terms_accepted'))
+                            class="mt-1 accent-secondary cursor-pointer">
+                        <span class="cursor-pointer">Tôi cam kết có quyền hợp pháp đối với tài sản này và thông tin đăng tải là chính xác.</span>
+                    </label>
+                    @error('terms_accepted') <p class="text-sm text-error">{{ $message }}</p> @enderror
+
+                    <div class="flex flex-col-reverse gap-3 border-t border-outline/20 pt-5 sm:flex-row sm:justify-end">
+                        <a href="{{ route('assets.my-assets') }}"
+                            class="rounded-lg bg-surface-container px-6 py-3 text-center font-semibold text-on-surface hover:bg-surface-container-high">Hủy</a>
+                        <button type="submit"
+                            class="cursor-pointer rounded-lg bg-primary px-7 py-3 font-bold text-on-primary hover:opacity-90 flex items-center justify-center gap-2">
+                            <span class="material-symbols-outlined text-[18px] text-secondary-container">rocket_launch</span>
+                            <span>Đăng tài sản ngay</span>
+                        </button>
                     </div>
-                    <!-- CARD 2: TIPS FOR ATTRACTING RENTERS & LEGAL COMPLIANCE -->
-                    <div class="bg-surface-container-lowest p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-secondary text-[22px]">lightbulb</span>
-                            <h4 class="font-label-lg text-label-lg text-on-surface font-bold">Mẹo thu hút khách &amp; chuẩn pháp lý</h4>
-                        </div>
-                        <div class="flex flex-col gap-space-sm pt-1">
-                            <div class="flex items-start gap-2.5">
-                                <span class="w-5 h-5 rounded-full bg-surface-container text-secondary flex items-center justify-center font-label-sm text-[11px] font-bold mt-0.5 flex-shrink-0">1</span>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">
-                                    <strong>Chụp rõ 4-6 góc máy:</strong> Ảnh chi tiết vết trầy cũ là bằng chứng xác thực 100% giúp đối soát Escrow không mất phí giải trình khi nhận lại.
-                                </p>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <span class="w-5 h-5 rounded-full bg-surface-container text-secondary flex items-center justify-center font-label-sm text-[11px] font-bold mt-0.5 flex-shrink-0">2</span>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">
-                                    <strong>Liệt kê chi tiết phụ kiện:</strong> Ghi rõ số lượng pin, sạc, thẻ nhớ giúp khách thuê yên tâm bấm đặt lịch ngay mà không cần nhắn tin hỏi lại.
-                                </p>
-                            </div>
-                            <div class="flex items-start gap-2.5">
-                                <span class="w-5 h-5 rounded-full bg-surface-container text-secondary flex items-center justify-center font-label-sm text-[11px] font-bold mt-0.5 flex-shrink-0">3</span>
-                                <p class="font-body-sm text-body-sm text-on-surface-variant">
-                                    <strong>Giá mở đầu cạnh tranh:</strong> Đặt giá thấp hơn thị trường 10-15% trong 3 lượt thuê đầu tiên để thu thập đánh giá 5 sao nhanh nhất.
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- CARD 3: ESCROW SHIELD COMMITMENT -->
-                    <div class="bg-surface-container-high p-space-md rounded-xl shadow-sm flex flex-col gap-space-sm">
-                        <div class="flex items-center gap-2">
-                            <span class="material-symbols-outlined text-secondary text-[24px]">gavel</span>
-                            <h4 class="font-label-lg text-label-lg text-on-surface font-bold">Cam kết RentShare Shield</h4>
-                        </div>
-                        <p class="font-body-sm text-body-sm text-on-surface-variant leading-relaxed">
-                            Tiền cọc của người thuê được phong tỏa trong tài khoản tín thác độc lập tại ngân hàng đối tác. Sau khi bạn xác nhận biên bản hoàn trả không khiếu nại, tiền thuê sẽ lập tức giải ngân về ví tài khoản của bạn.
-                        </p>
-                        <div class="pt-2 flex items-center justify-between text-on-surface font-label-sm text-label-sm">
-                            <span class="font-semibold text-secondary">Hỗ trợ đối soát 24/7</span>
-                            <a class="text-on-surface underline hover:text-secondary" href="#">Tìm hiểu quy trình →</a>
-                        </div>
-                    </div>
-                </aside>
-            </div>
+                </div>
+            </form>
         </div>
     </div>
 </main>
+
+<script>
+    document.getElementById('btn-sample-desc').addEventListener('click', function() {
+        const descTextarea = document.getElementById('description');
+        descTextarea.value = `- Tình trạng: Thiết bị hoạt động hoàn hảo, ngoại hình mới khoảng 95%.\n- Thông số chính: (Nhập thông số kỹ thuật ở đây).\n- Phụ kiện: Đầy đủ cáp sạc, phụ kiện kèm theo như hình.\n- Cam kết: Hàng chính hãng, đúng mô tả.`;
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const citySelect = document.getElementById('city_select');
+        const districtSelect = document.getElementById('district_select');
+        const cityInput = document.getElementById('city');
+        const districtInput = document.getElementById('district');
+
+        const oldCity = "{{ old('city') }}";
+        const oldDistrict = "{{ old('district') }}";
+
+        const API_URL = 'https://provinces.open-api.vn/api/?depth=2';
+
+        fetch(API_URL)
+            .then(response => response.json())
+            .then(data => {
+                window.provinceData = data;
+
+                data.forEach(province => {
+                    const option = document.createElement('option');
+                    option.value = province.code;
+                    option.textContent = province.name;
+                    option.dataset.name = province.name;
+
+                    if (oldCity && province.name === oldCity) {
+                        option.selected = true;
+                    }
+                    citySelect.appendChild(option);
+                });
+
+                if (citySelect.value) {
+                    loadDistricts(citySelect.value, oldDistrict);
+                }
+            })
+            .catch(error => console.error('Lỗi tải danh sách tỉnh thành:', error));
+
+        citySelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            cityInput.value = selectedOption.dataset.name || '';
+
+            const provinceCode = this.value;
+            districtSelect.innerHTML = '<option value="">-- Chọn Quận / Huyện --</option>';
+            districtInput.value = '';
+
+            if (provinceCode) {
+                loadDistricts(provinceCode);
+            } else {
+                districtSelect.disabled = true;
+            }
+        });
+
+        function loadDistricts(provinceCode, selectedDistrictName = '') {
+            districtSelect.disabled = false;
+            districtSelect.innerHTML = '<option value="">-- Chọn Quận / Huyện --</option>';
+
+            const province = window.provinceData.find(p => p.code == provinceCode);
+            if (province && province.districts) {
+                province.districts.forEach(district => {
+                    const option = document.createElement('option');
+                    option.value = district.code;
+                    option.textContent = district.name;
+                    option.dataset.name = district.name;
+
+                    if (selectedDistrictName && district.name === selectedDistrictName) {
+                        option.selected = true;
+                        districtInput.value = district.name;
+                    }
+                    districtSelect.appendChild(option);
+                });
+            }
+        }
+
+        districtSelect.addEventListener('change', function() {
+            const selectedOption = this.options[this.selectedIndex];
+            districtInput.value = selectedOption.dataset.name || '';
+        });
+    });
+
+    document.addEventListener('DOMContentLoaded', function() {
+        const dropZone = document.getElementById('drop-zone');
+        const imageInput = document.getElementById('images');
+        const errorDiv = document.getElementById('file-error-msg');
+        const previewContainer = document.getElementById('image-preview-container');
+        const form = document.querySelector('form');
+
+        let dataTransfer = new DataTransfer();
+
+        function updateFileList() {
+            imageInput.files = dataTransfer.files;
+            renderPreviews();
+        }
+
+        function renderPreviews() {
+            previewContainer.innerHTML = '';
+            const files = dataTransfer.files;
+
+            if (files.length > 0) {
+                errorDiv.textContent = '';
+                errorDiv.classList.add('hidden');
+            }
+
+            for (let i = 0; i < files.length; i++) {
+                const file = files[i];
+                const reader = new FileReader();
+
+                reader.onload = function(e) {
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'relative group rounded-xl overflow-hidden border border-outline/30 bg-surface-container-low aspect-square flex items-center justify-center';
+
+                    const img = document.createElement('img');
+                    img.src = e.target.result;
+                    img.className = 'w-full h-full object-cover';
+                    wrapper.appendChild(img);
+
+                    if (i === 0) {
+                        const badge = document.createElement('span');
+                        badge.className = 'absolute top-1 left-1 bg-primary text-on-primary text-[10px] font-bold px-1.5 py-0.5 rounded shadow';
+                        badge.textContent = 'Ảnh đại diện';
+                        wrapper.appendChild(badge);
+                    }
+
+                    const deleteBtn = document.createElement('button');
+                    deleteBtn.type = 'button';
+                    deleteBtn.className = 'absolute top-1 right-1 bg-error text-on-error rounded-full p-1 opacity-80 hover:opacity-100 transition-opacity shadow cursor-pointer';
+                    deleteBtn.innerHTML = `<svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path></svg>`;
+
+                    deleteBtn.addEventListener('click', function() {
+                        const dt = new DataTransfer();
+                        for (let j = 0; j < files.length; j++) {
+                            if (j !== i) {
+                                dt.items.add(files[j]);
+                            }
+                        }
+                        dataTransfer = dt;
+                        updateFileList();
+                    });
+                    wrapper.appendChild(deleteBtn);
+
+                    previewContainer.appendChild(wrapper);
+                }
+                reader.readAsDataURL(file);
+            }
+        }
+
+        if (form) {
+            form.addEventListener('submit', function(e) {
+                if (dataTransfer.files.length === 0) {
+                    e.preventDefault();
+                    errorDiv.innerHTML = '⚠️ Vui lòng tải lên ít nhất 1 ảnh đại diện cho tài sản.';
+                    errorDiv.classList.remove('hidden');
+                    dropZone.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'center'
+                    });
+                }
+            });
+        }
+
+        function handleFiles(newFiles) {
+            errorDiv.textContent = '';
+            errorDiv.classList.add('hidden');
+
+            let errorMessages = [];
+            let invalidTypeFiles = [];
+            let oversizedFiles = [];
+            let limitExceeded = false;
+
+            const maxSize = 5 * 1024 * 1024;
+            const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
+
+            for (let i = 0; i < newFiles.length; i++) {
+                const file = newFiles[i];
+
+                if (!allowedTypes.includes(file.type)) {
+                    invalidTypeFiles.push(file.name);
+                    continue;
+                }
+
+                if (file.size > maxSize) {
+                    oversizedFiles.push(file.name);
+                    continue;
+                }
+
+                if (dataTransfer.files.length >= 10) {
+                    limitExceeded = true;
+                    break;
+                }
+
+                dataTransfer.items.add(file);
+            }
+
+            if (invalidTypeFiles.length > 0) {
+                errorMessages.push(`⚠️ Các file không phải định dạng ảnh hợp lệ (JPG, PNG, WebP): ${invalidTypeFiles.join(', ')}`);
+            }
+            if (oversizedFiles.length > 0) {
+                errorMessages.push(`⚠️ Các ảnh vượt quá dung lượng 5MB: ${oversizedFiles.join(', ')}`);
+            }
+            if (limitExceeded) {
+                errorMessages.push(`⚠️ Hệ thống chỉ cho phép tải tối đa 10 ảnh. Các ảnh dư thừa đã bị bỏ qua.`);
+            }
+
+            if (errorMessages.length > 0) {
+                errorDiv.innerHTML = errorMessages.join('<br>');
+                errorDiv.classList.remove('hidden');
+            }
+
+            updateFileList();
+        }
+
+        imageInput.addEventListener('change', function(e) {
+            handleFiles(e.target.files);
+        });
+
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, function(e) {
+                e.preventDefault();
+                e.stopPropagation();
+            }, false);
+        });
+
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropZone.addEventListener(eventName, function() {
+                dropZone.classList.add('border-primary', 'bg-surface-container');
+            }, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropZone.addEventListener(eventName, function() {
+                dropZone.classList.remove('border-primary', 'bg-surface-container');
+            }, false);
+        });
+
+        dropZone.addEventListener('drop', function(e) {
+            handleFiles(e.dataTransfer.files);
+        }, false);
+    });
+</script>
 @endsection

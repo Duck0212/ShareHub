@@ -14,7 +14,7 @@
 </head>
 
 <body class="bg-surface font-body-md text-on-surface antialiased">
-    <header class="relative h-20 w-full px-gutter grid grid-cols-[1fr_auto_1fr] items-center gap-space-md">
+    <header class="relative h-20 w-full px-gutter grid grid-cols-[1fr_auto_1fr] items-center gap-space-md sticky top-0 z-50 bg-surface-container-lowest border-b border-outline-variant/30">
 
         <!-- CỘT 1: LOGO BÊN TRÁI -->
         <div class="flex items-center justify-start">
