@@ -31,4 +31,9 @@ class Category extends Model
     {
         return $this->hasMany(Asset::class);
     }
+
+    public function rentalRequests(): HasMany
+    {
+        return $this->hasMany(RentalRequest::class);
+    }
 }

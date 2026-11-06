@@ -236,7 +236,7 @@
                 <div class="bg-white rounded-2xl p-6 border border-border shadow-sm space-y-4">
                     <div class="flex items-center gap-3">
                         <div class="w-14 h-14 rounded-full bg-teal-100 text-secondary font-bold text-xl flex items-center justify-center shrink-0 ring-2 ring-secondary/30">
-                            <img alt="Profile" class="w-full h-full object-cover rounded-full" src="{{ auth()->user()->avatar ? asset('storage/' . auth()->user()->avatar) : asset('imgs/default-avatar.png') }}" />
+                            <img alt="Profile" class="w-full h-full object-cover rounded-full" src="{{ $asset->user->avatar ? asset('storage/' . $asset->user->avatar) : asset('imgs/default-avatar.png') }}" />
                         </div>
                         <div>
                             <div class="flex items-center gap-1">

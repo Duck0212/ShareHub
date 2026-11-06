@@ -232,7 +232,7 @@
                             <span class="w-8 h-8 rounded-lg bg-primary text-on-primary flex items-center justify-center font-label-sm text-label-sm font-bold">3</span>
                             <div>
                                 <h2 class="font-headline-sm text-headline-sm text-on-surface font-bold">Tải thêm ảnh mới</h2>
-                                <p class="font-body-lg text-body-lg text-on-surface-variant">Có thể tải thêm tối đa 10 ảnh trong một lần. Định dạng JPG, PNG hoặc WebP; tối đa 5MB mỗi ảnh[cite: 7].</p>
+                                <p class="font-body-lg text-body-lg text-on-surface-variant">Có thể tải thêm tối đa 10 ảnh trong một lần. Định dạng JPG, PNG hoặc WebP; tối đa 5MB mỗi ảnh.</p>
                             </div>
                         </div>
                         <span class="font-label-sm text-label-sm text-secondary bg-surface-container-low px-2.5 py-1 rounded-full font-semibold">Bắt buộc</span>

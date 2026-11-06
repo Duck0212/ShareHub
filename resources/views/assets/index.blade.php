@@ -71,17 +71,11 @@
                             <label for="city" class="font-label-lg text-label-lg text-on-surface font-semibold">Khu vực / Tỉnh thành</label>
                             <div class="relative">
                                 <span class="material-symbols-outlined absolute left-2.5 top-2.5 text-on-surface-variant text-[18px]">location_on</span>
-
-                                <!-- Input cho phép người dùng gõ tự do hoặc chọn từ gợi ý -->
                                 <input id="city" name="city" value="{{ request('city') }}" autocomplete="off"
                                     placeholder="Nhập hoặc chọn Tỉnh/Thành..."
                                     class="w-full pl-8 pr-8 py-2 bg-surface-container-low rounded-lg text-on-surface font-body-md text-body-lg outline-none focus:ring-2 focus:ring-secondary transition-all">
-
-                                <!-- Icon mũi tên dropdown -->
                                 <span class="material-symbols-outlined absolute right-2.5 top-2.5 text-on-surface-variant text-[18px] pointer-events-none">expand_more</span>
                             </div>
-
-                            <!-- Bảng danh sách đề xuất (Tối đa ~5-6 mục, tự động có thanh cuộn) -->
                             <div id="city-suggestions"
                                 class="hidden absolute left-0 right-0 top-full mt-1 max-h-48 overflow-y-auto bg-surface-container-lowest rounded-lg shadow-lg border border-surface-container-high z-50 flex flex-col">
                             </div>
@@ -165,15 +159,97 @@
                     </div>
 
                     <!-- Filter Tags (nếu có từ khóa đang lọc) -->
-                    @if(request()->hasAny(['q', 'category_id', 'city', 'condition', 'min_price', 'max_price']))
-                    <div class="flex items-center gap-2 flex-wrap text-label-sm font-label-sm">
+                    @php
+                    $hasActiveFilters = request()->filled('q')
+                    || request()->filled('category_id')
+                    || request()->filled('city')
+                    || request()->filled('condition')
+                    || request()->filled('min_price')
+                    || request()->filled('max_price')
+                    || (request()->filled('sort') && request('sort') !== 'latest');
+                    @endphp
+
+                    @if($hasActiveFilters)
+                    <div class="flex items-center gap-2 flex-wrap text-label-sm font-label-sm" id="active-filter-tags">
                         <span class="text-on-surface-variant">Đang lọc theo:</span>
-                        @if(request('q'))
-                        <span class="inline-flex items-center gap-1 bg-surface-container-high px-2.5 py-1 rounded-full text-on-surface">Từ khóa: "{{ request('q') }}"</span>
+
+                        <!-- 1. Tag Từ khóa -->
+                        @if(request()->filled('q'))
+                        <span class="inline-flex items-center gap-1.5 bg-blue-50 text-blue-700 dark:bg-blue-950/40 dark:text-blue-300 px-2.5 py-1 rounded-full border border-blue-200/50 ">
+                            Từ khóa: "{{ request('q') }}"
+                            <button type="button" onclick="removeFilter('q')" class="hover:opacity-75 transition-opacity font-bold text-xs cursor-pointer">✕</button>
+                        </span>
                         @endif
-                        @if(request('city'))
-                        <span class="inline-flex items-center gap-1 bg-surface-container-high px-2.5 py-1 rounded-full text-on-surface">{{ request('city') }}</span>
+
+                        <!-- 2. Tag Danh mục -->
+                        @if(request()->filled('category_id') && isset($categories))
+                        @php
+                        $selectedCategory = $categories->firstWhere('id', request('category_id'));
+                        @endphp
+                        @if($selectedCategory)
+                        <span class="inline-flex items-center gap-1.5 bg-purple-50 text-purple-700 dark:bg-purple-950/40 dark:text-purple-300 px-2.5 py-1 rounded-full border border-purple-200/50 ">
+                            Danh mục: {{ $selectedCategory->name }}
+                            <button type="button" onclick="removeFilter('category_id')" class="hover:opacity-75 transition-opacity font-bold text-xs cursor-pointer">✕</button>
+                        </span>
                         @endif
+                        @endif
+
+                        <!-- 3. Tag Khu vực / Tỉnh thành -->
+                        @if(request()->filled('city'))
+                        <span class="inline-flex items-center gap-1.5 bg-teal-50 text-teal-700 dark:bg-teal-950/40 dark:text-teal-300 px-2.5 py-1 rounded-full border border-teal-200/50 ">
+                            Khu vực: {{ request('city') }}
+                            <button type="button" onclick="removeFilter('city')" class="hover:opacity-75 transition-opacity font-bold text-xs cursor-pointer">✕</button>
+                        </span>
+                        @endif
+
+                        <!-- 4. Tag Tình trạng máy -->
+                        @if(request()->filled('condition'))
+                        @php
+                        $conditionLabels = [
+                        'new' => 'Mới (100%)',
+                        'like_new' => 'Như mới (99%)',
+                        'good' => 'Tốt (Hoạt động ổn định)',
+                        'fair' => 'Đã qua sử dụng'
+                        ];
+                        $conditionText = $conditionLabels[request('condition')] ?? request('condition');
+                        @endphp
+                        <span class="inline-flex items-center gap-1.5 bg-indigo-50 text-indigo-700 dark:bg-indigo-950/40 dark:text-indigo-300 px-2.5 py-1 rounded-full border border-indigo-200/50 ">
+                            Tình trạng: {{ $conditionText }}
+                            <button type="button" onclick="removeFilter('condition')" class="hover:opacity-75 transition-opacity font-bold text-xs cursor-pointer">✕</button>
+                        </span>
+                        @endif
+
+                        <!-- 5. Tag Giá thuê -->
+                        @if(request()->filled('min_price') || request()->filled('max_price'))
+                        <span class="inline-flex items-center gap-1.5 bg-amber-50 text-amber-700 dark:bg-amber-950/40 dark:text-amber-300 px-2.5 py-1 rounded-full border border-amber-200/50 ">
+                            Giá thuê:
+                            @if(request()->filled('min_price') && request()->filled('max_price'))
+                            {{ number_format((float)request('min_price'), 0, ',', '.') }}đ - {{ number_format((float)request('max_price'), 0, ',', '.') }}đ
+                            @elseif(request()->filled('min_price'))
+                            Trên {{ number_format((float)request('min_price'), 0, ',', '.') }}đ
+                            @else
+                            Dưới {{ number_format((float)request('max_price'), 0, ',', '.') }}đ
+                            @endif
+                            <button type="button" onclick="removeBudgetFilters()" class="hover:opacity-75 transition-opacity font-bold text-xs cursor-pointer">✕</button>
+                        </span>
+                        @endif
+
+                        <!-- 6. Tag Sắp xếp (Đã sửa lại đúng key khớp với select & bỏ chữ Sắp xếp) -->
+                        @if(request()->filled('sort') && request('sort') !== 'latest')
+                        @php
+                        $sortLabels = [
+                        'price_asc' => 'Giá thuê: Thấp đến Cao',
+                        'price_desc' => 'Giá thuê: Cao đến Thấp'
+                        ];
+                        @endphp
+                        @if(isset($sortLabels[request('sort')]))
+                        <span class="inline-flex items-center gap-1.5 bg-rose-50 text-rose-700 dark:bg-rose-950/40 dark:text-rose-300 px-2.5 py-1 rounded-full border border-rose-200/50 ">
+                            {{ $sortLabels[request('sort')] }}
+                            <button type="button" onclick="removeFilter('sort')" class="hover:opacity-75 transition-opacity font-bold text-xs cursor-pointer">✕</button>
+                        </span>
+                        @endif
+                        @endif
+
                         <a href="{{ route('assets.index') }}" class="text-secondary hover:underline font-semibold ml-1">Xóa tất cả bộ lọc</a>
                     </div>
                     @endif
@@ -315,6 +391,21 @@
 </main>
 
 <script>
+    // Hàm xóa từng tiêu chí độc lập khi bấm vào nút '✕' trên mỗi tag
+    function removeFilter(filterName) {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.delete(filterName);
+        window.location.search = urlParams.toString();
+    }
+
+    // Hàm riêng để xử lý xóa đồng thời cả 2 input giá (min_price và max_price)
+    function removeBudgetFilters() {
+        const urlParams = new URLSearchParams(window.location.search);
+        urlParams.delete('min_price');
+        urlParams.delete('max_price');
+        window.location.search = urlParams.toString();
+    }
+
     document.addEventListener('DOMContentLoaded', function() {
         const cityInput = document.getElementById('city');
         const suggestionBox = document.getElementById('city-suggestions');

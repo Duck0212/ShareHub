@@ -385,10 +385,7 @@
             previewContainer.innerHTML = '';
             const files = dataTransfer.files;
 
-            if (files.length > 0) {
-                errorDiv.textContent = '';
-                errorDiv.classList.add('hidden');
-            }
+            // Xóa bỏ đoạn tự ẩn errorDiv ở đây để thông báo lỗi vẫn giữ lại cho người dùng đọc
 
             for (let i = 0; i < files.length; i++) {
                 const file = files[i];

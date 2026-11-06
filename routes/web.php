@@ -3,6 +3,7 @@
 use App\Http\Controllers\Asset\AssetController;
 use App\Http\Controllers\Home\HomeController;
 use App\Http\Controllers\User\UserController;
+use App\Http\Controllers\RentalRequest\RentalRequestController;
 use Illuminate\Support\Facades\Route;
 
 //-----Home routes-----
@@ -67,21 +68,31 @@ Route::prefix('notifications')
 Route::prefix('rental-requests')
     ->name('rental-requests.')
     ->group(function () {
-        //Danh sách nhu cầu thuê
-        Route::view('/', 'rental-requests.index')->name('index');
+        // Danh sách công khai: chỉ hiển thị yêu cầu đang mở
+        Route::get('/', [RentalRequestController::class, 'index'])->name('index');
 
-        //Đăng yêu cầu thuê
-        Route::view('/create', 'rental-requests.create')
-            //->middleware('auth')
-            ->name('create');
+        // Các thao tác yêu cầu đăng nhập
+        Route::middleware('auth')->group(function () {
+            Route::get('/create', [RentalRequestController::class, 'create'])->name('create');
+            Route::post('/', [RentalRequestController::class, 'store'])->name('store');
+            Route::get('/my-requests', [RentalRequestController::class, 'myRequests'])->name('my-requests');
 
-        //Danh sách yêu cầu thuê của tôi
-        Route::view('/my-requests', 'rental-requests.my-requests')
-            ->middleware('auth')
-            ->name('my-requests');
+            // Chỉnh sửa
+            Route::get('/{rentalRequest}/edit', [RentalRequestController::class, 'edit'])->name('edit');
+            Route::put('/{rentalRequest}', [RentalRequestController::class, 'update'])->name('update');
 
-        //Chi tiết yêu cầu thuê
-        Route::view('/{rentalRequest}', 'rental-requests.show')->name('show');
+            // Cập nhật trạng thái yêu cầu
+            Route::patch('/{rentalRequest}/status', [RentalRequestController::class, 'updateStatus'])
+                ->name('update-status');
+
+            // Xóa hình ảnh của yêu cầu thuê
+            Route::delete('/{rentalRequest}/images/{image}', [RentalRequestController::class, 'destroyImage'])
+                ->name('images.destroy');
+        });
+
+        // Đặt sau các route cụ thể để tránh xung đột với /create và /my-requests
+        Route::get('/{rentalRequest}', [RentalRequestController::class, 'show'])
+            ->name('show');
     });
 
 //-----Users routes-----
